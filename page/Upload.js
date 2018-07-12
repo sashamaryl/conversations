@@ -5,7 +5,10 @@ import {
     ScrollView,
     StyleSheet,
     Text,
+    TextInput,
+    Dimensions,
     TouchableHighlight,
+    Animated,
     TouchableWithoutFeedback,
     View,
     CheckBox,
@@ -18,14 +21,18 @@ import firebase from "react-native-firebase";
 import { Button } from "../component/Button.js";
 import Progress from "../component/Progress.js";
 
-import { H2, P, Strong } from "./styles.js";
+import { H2, H3, P, Bull, Strong } from "./styles.js";
 
+const START = 1
+const CHOOSER = 2
+const LOGGING_IN = 3
+const UPLOADING = 4
+const UPLOADED = 5
+const MYVIDEOS = 6
 
-const CHOOSER = 1
-const LOGGING_IN = 2
-const UPLOADING = 3
-const UPLOADED = 4
-
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
+const backgroundPicture = require("../skyline_bg");
 
 function formatSize(bytes) {
     return `${(bytes/1024/1024).toFixed(1)} MB`;
@@ -69,7 +76,7 @@ export default class UploadPage extends Component {
         this.state = {
             user: null,
             video: null,
-            state: CHOOSER,
+            state: START,
             checked: false,
             myKey: null,
             uploaded: []
@@ -88,7 +95,7 @@ export default class UploadPage extends Component {
             } else {
             // user doesn't have a device token yet
             console.log("user doesn't have a device token yet; fcmtoken = ", fcmToken);
-            } 
+            }
         }).catch(function(err) {
             console.error('An error occurred while retrieving token. ', err);
         });
@@ -260,7 +267,7 @@ export default class UploadPage extends Component {
         );
     }
 
-    renderChooser() {
+    renderChooser = () => {
         let {checked, video, upload, uploaded} = this.state;
         return (
             <View style={styles.contentWrapper}>
@@ -299,16 +306,41 @@ export default class UploadPage extends Component {
         );
     }
 
+    renderStart() => {
+      <View style={styles.contentWrapper}>
+          {shareStoryText}
+          <View style={styles.buttonRow}>
+              <Button onPress={this.selectVideo}>
+                  Select a Video
+              </Button>
+
+              <Button onPress={this.upload}
+                      disabled={!video} >
+                  Upload {this.videoName()}
+              </Button>
+              <Button onPress={() => this.setState({ state: UPLOADED })} disabled={!uploaded.length}>
+                  View Previous Uploads
+              </Button>
+          </View>
+
+
+    }
+
+
+
     renderContent() {
         switch(this.state.state) {
+            case START:
+                return this.renderStart();
+            case CHOOSER:
+                return this.renderChooser();
             case UPLOADING:
                 return this.renderUploader();
-
             case UPLOADED:
                 return this.renderUploaded();
 
             default:
-                return this.renderChooser();
+                return this.renderStart();
         }
     }
 
@@ -327,6 +359,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+
     },
     contentWrapper: {
         flexDirection: 'column',

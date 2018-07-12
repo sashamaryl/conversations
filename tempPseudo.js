@@ -1,24 +1,24 @@
 import React from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  Dimensions,
-  TouchableHighlight,
-  Animated,
-  Image
+-  Text,
+-  View,
+-  StyleSheet,
+-  TextInput,
+-  Dimensions,
+-  TouchableHighlight,
+-  Animated,
+-  Image
 } from 'react-native';
-import ImagePicker from "react-native-image-picker";
-import firebase from "react-native-firebase";
-import UploadPage from "./page/Upload";
-import { H2, H3, P, Bull } from "./page/styles.js";
-import { Button } from "./component/Button.js";
+- import ImagePicker from "react-native-image-picker";
+- import firebase from "react-native-firebase";
+- import UploadPage from "./page/Upload";
+- import { H2, H3, P, Bull } from "./page/styles.js";
+- import { Button } from "./component/Button.js";
 
 
 
-const width = Dimensions.get("window").width
-const height = Dimensions.get("window").height
+- const width = Dimensions.get("window").width
+- const height = Dimensions.get("window").height
 
 
 shareStoryText = () => (
@@ -94,6 +94,22 @@ const uploadPages = {
     },
   };
 
+/***
+Buttons:
+ share new strategy
+ my shared videos
+
+
+
+***/
+
+
+/***
+view videos page
+delete videos option/page
+***/
+
+
 export default class tempPseudo extends React.Component {
   constructor(props){
       super(props);
@@ -102,15 +118,24 @@ export default class tempPseudo extends React.Component {
       };
     };
 
-// parens may need to be brackets
-  goToStage = ( nextStage ) => (
-      this.setState({ stage: nextStage })
-  );
+// // parens may need to be brackets
+//   goToStage = ( nextStage ) => (
+//       this.setState({ stage: nextStage })
+//   );
 
   render(){
 
     let { stage } = this.state;
+/*
 
+START
+CHOOSER
+LOGGING_IN
+UPLOADING
+UPLOADED
+MYVIDEOS
+
+*/
     const title = uploadPages.titles[stage];
     const bodyText = uploadPages.bodyText[stage];
     const buttonFunction = () => this.goToStage(uploadPages.buttonFunction[stage]);
