@@ -1,14 +1,14 @@
-import React from 'react';
-import {
--  Text,
--  View,
--  StyleSheet,
--  TextInput,
--  Dimensions,
--  TouchableHighlight,
--  Animated,
--  Image
-} from 'react-native';
+- import React from 'react';
+- import {
+-   Text,
+-   View,
+-   StyleSheet,
+-   TextInput,
+-   Dimensions,
+-   TouchableHighlight,
+-   Animated,
+-   Image
+- } from 'react-native';
 - import ImagePicker from "react-native-image-picker";
 - import firebase from "react-native-firebase";
 - import UploadPage from "./page/Upload";
@@ -17,11 +17,12 @@ import {
 
 
 
+
 - const width = Dimensions.get("window").width
 - const height = Dimensions.get("window").height
 
 
-shareStoryText = () => (
+export const shareStoryText = () => (
   <View>
     <P>The women of Aashiyaan shared their strategies to stay safe.</P>
     <P>Share YOUR strategy!
@@ -53,7 +54,7 @@ class InputField extends React.Component {
     )}
 }    ;
 
-inputForm = () => (
+export const inputForm = () => (
     <View>
       <InputField
         text={<P>My story is about ...</P>}
@@ -64,33 +65,40 @@ inputForm = () => (
     </View>
   );
 
-thankYouText = () => (
+export const thankYouText = () => (
       <View>
         <P>Your video may appear on Aashiyan!</P>
         <P>If you would like to have your video removed, contact us at idoc.conversations@gmail.com </P>
       </View>
   );
 
-const uploadPages = {
-    titles: {
-      start: "Share Your Story",
-      details: "Add Details",
-      thankyou: "Thanks for Sharing!"
+export const uploadPages = {
+    title: {
+      START: "Share Your Story",
+      CHOOSER: "Add Details",
+      UPLOADING: "",
+      UPLOADED: "Thanks for Sharing!"
     },
     bodyText: {
-      start: shareStoryText(),
-      details: inputForm(),
-      thankyou: thankYouText(),
+      START: shareStoryText(),
+      CHOOSER: inputForm(),
+      UPLOADING: "",
+      UPLOADED: thankYouText(),
+    },
+    renderPage: {
+      UPLOADED: () => UploadPage.renderUploaded()
     },
     buttonFunction: {
-      start: "details",
-      details: "thankyou",
-      thankyou: "done",
+      START: "details",
+      CHOOSER: "thankyou",
+      UPLOADING: "",
+      UPLOADED: "done",
     },
     buttonText: {
-      start: "Start",
-      details: "Upload Video",
-      thankyou: "home",
+      START: "Start",
+      CHOOSER: "Upload Video",
+      UPLOADING: "",
+      UPLOADED: "home",
     },
   };
 
@@ -136,10 +144,11 @@ UPLOADED
 MYVIDEOS
 
 */
-    const title = uploadPages.titles[stage];
+    const title = uploadPages.title[stage];
     const bodyText = uploadPages.bodyText[stage];
     const buttonFunction = () => this.goToStage(uploadPages.buttonFunction[stage]);
     const buttonText = uploadPages.buttonText[stage];
+    const renderFunction =  uploadPages.renderPage[stage];
 
 
     return(
@@ -150,6 +159,7 @@ MYVIDEOS
         <View style={styles.innerView}>
             <H2>{title}</H2>
             {bodyText}
+            {UploadPage.renderContent}
             <Button
               buttonStyle={styles.purpleButton}
               style={styles.button}
