@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
         /* textDecorationColor: "#ddd",
          * textDecorationLine: "underline" */
     },
-
     bodyText: {
         fontSize: 6*pr,
         lineHeight: 20,
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
         fontSize: 7*pr
     },
     settingsRadioButton: {
-        lineHeight: 10, 
+        lineHeight: 10,
         alignSelf: 'flex-start'
     }
 });

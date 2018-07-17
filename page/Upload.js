@@ -23,6 +23,8 @@ import Progress from "../component/Progress.js";
 
 import { H2, H3, P, Bull, Strong } from "./styles.js";
 
+import { uploadText, InputField, uploadPages } from "./uploadHelper.js"
+
 const START = 1
 const CHOOSER = 2
 const LOGGING_IN = 3
@@ -69,55 +71,6 @@ const UploadsList = ({videos, onDelete}) => (
     />
 );
 
-const shareStoryText = () => (
-  <View>
-    <P>The women of Aashiyaan shared their strategies to stay safe.</P>
-    <P>Share YOUR strategy!
-      Create a story
-      Record a video with your device.
-      Submit one story or strategy per video.
-      Keep clips short. We recommend less than 2 minutes.
-      Your story may be added to Aashiyaan! </P>
-  </View>
-);
-
-class InputField extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      text: "",
-    }
-  }
-  render(){
-  let { text, placeholder } = this.props;
-    return (
-      <View style={styles.inputField}>
-        <Text>{text}</Text>
-        <TextInput
-          onTextChange={(text) => this.setState({text})}
-          placeholder={placeholder}
-        />
-      </View>
-    )}
-}    ;
-
-inputForm = () => (
-    <View>
-      <InputField
-        text={<P>My story is about ...</P>}
-        placeholder="Details (optional)" />
-      <InputField
-        text={<P>Please contact me if my video will appear on aashiyaan.</P>}
-        placeholder="Email (optional)" />
-    </View>
-  );
-
-thankYouText = () => (
-    <View>
-      <P>Your video may appear on Aashiyan!</P>
-      <P>If you would like to have your video removed, contact us at idoc.conversations@gmail.com </P>
-    </View>
-  );
 
 
 
@@ -133,53 +86,6 @@ export default class UploadPage extends Component {
             uploaded: []
         };
     }
-
-
-
-uploadPages = (type, state) => {
-  let elements = {
-    title: {
-      START: "Share Your Story",
-      CHOOSER: "Add Details",
-      LOGGING_IN:"",
-      UPLOADING: "",
-      UPLOADED: "Thanks for Sharing!",
-      MYVIDEOS: ""
-    },
-    bodyText: {
-      START: shareStoryText(),
-      CHOOSER: inputForm(),
-      UPLOADING: "",
-      LOGGING_IN:"",
-      UPLOADED: thankYouText(),
-      MYVIDEOS: ""
-    },
-    renderPage: {
-      LOGGING_IN:"",
-      UPLOADED: "",
-      MYVIDEOS: ""
-    },
-    buttonFunction: {
-      START: () => goToState(CHOOSER),
-      CHOOSER: () => goToState(LOGGING_IN),
-      LOGGING_IN: () => goToState(UPLOADING),
-      UPLOADING: () => goToState(UPLOADED),
-      UPLOADED: () => goToState(MYVIDEOS),
-      MYVIDEOS: () => goToState(START),
-    },
-    buttonText: {
-      START: "Start",
-      CHOOSER: "Upload Video",
-      LOGGING_IN:"",
-      UPLOADING: "",
-      UPLOADED: "home",
-      MYVIDEOS: ""
-    },
-  }
-
-  return  () => elements[type][state]  ;
-
-  };
 
     componentDidMount() {
         this.getUploadedVideos().then((videos) => this.setState({uploaded: videos}),
@@ -369,9 +275,7 @@ uploadPages = (type, state) => {
         let {checked, video, upload, uploaded} = this.state;
         return (
             <View style={styles.contentWrapper}>
-                <P>
-                    INSERT EXPLANATORY TEXT HERE
-                </P>
+                <View style={{padding: "10%"}}>{uploadText.inputForm()}</View>
 
                 {uploaded.length > 0 && (
                      <P>
@@ -382,50 +286,43 @@ uploadPages = (type, state) => {
                     <Button onPress={this.selectVideo}>
                         Select a Video
                     </Button>
-
                     <Button onPress={this.upload}
                             disabled={!video} >
                         Upload {this.videoName()}
                     </Button>
-                    <Button onPress={() => this.setState({ state: UPLOADED })} disabled={!uploaded.length}>
+                    <Button onPress={() => this.setState({ state: UPLOADED })}
+                            disabled={!uploaded.length}>
                         View Previous Uploads
                     </Button>
                 </View>
-                    <TouchableWithoutFeedback onPress={() => this.setState({checked: !checked})}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <CheckBox
-                                value={checked}
-                                disabled={!video}
-                            />
-                            <Text style={{marginTop: 5}}> Notify me if my video is uploaded to YouTube</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
             </View>
         );
     }
 
     renderStart() {
-      let { video, uploaded } = this.state;
+      let { video, uploaded, state} = this.state;
       return (
-      <View style={styles.contentWrapper}>
-          {this.shareStoryText}
-          <View style={styles.buttonRow}>
-              <Button onPress={this.selectVideo}>
-                  Select a Video
-              </Button>
-
-              <Button onPress={this.upload}
-                      disabled={!video} >
-                  Upload {this.videoName()}
-              </Button>
-              <Button onPress={() => this.setState({ state: UPLOADED })} disabled={!uploaded.length}>
-                  View Previous Uploads
-              </Button>
-          </View>
+      <View style={{flexDirection: "row"}}>
+        <View style={{flex: 5}}>
+          <H2>{uploadPages.title.START}</H2>
+          <P>{uploadPages.bodyText.START()}</P>
+          <Button
+            buttonStyle={styles.purpleButton}
+            style={styles.button}
+            onPress={() => this.setState({ state: CHOOSER })}
+            >upload video</Button>
+        </View>
+        <ScrollView style={{flex: 1, height: "100%", width: 10}}>
+          {UploadsList}
+          <View style={styles.videoThumnail}/>
+          <View style={styles.videoThumnail}/>
+          <View style={styles.videoThumnail}/>
+        </ScrollView>
       </View>
     )}
 
     renderContent() {
+      // return this.renderStart()
         switch(this.state.state) {
             case START:
                 return this.renderStart();
@@ -439,72 +336,22 @@ uploadPages = (type, state) => {
             default:
                 return this.renderStart();
         }
-    }
+      }
 
-
-    goToState = (newState) => {
-      this.setState({ state: newState })
-    }
 
     render() {
       let { state } = this.state;
-
-
-      const title = () => "title";
-      const bodyText = () => "bodyText";
-      const buttonFunction = () => console.log("button pushed"); //uploadPages.buttonFunction[state];
-      const buttonText = () =>"buttonText";
-      const renderFunction = () =>"renderFunction";
-
-        return (
-          <View style={{alignItems: "center", justifyContent: "center"}}>
+      return (
+          <View style={styles.container}>
               <Image source={backgroundPicture}
                      style={styles.backImage}
                      resizeMode="stretch" />
               <View style={styles.innerView}>
-                  <H2>{this.uploadPages(title, this.state.state)}</H2>
-                    {this.renderContent()}
-                    {bodyText}
-                    <View style={styles.buttonRow}>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={() => goToState(CHOOSER)}
-                            >Chooser</Button>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={() => goToState(LOGGING_IN)}
-                            >Chooser</Button>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={() => goToState(UPLOADING)}
-                            >Chooser</Button>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={() => goToState(UPLOADED)}
-                            >Chooser</Button>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={() => goToState(MYVIDEOS)}
-                            >Chooser</Button>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={() => goToState(START)}
-                            >Chooser</Button>
-                        <Button
-                            buttonStyle={styles.purpleButton}
-                            style={styles.button}
-                            onPress={buttonFunction}>
-                                {buttonText}
-                            </Button>
-                </View>
-              </View>
+
+                {this.renderContent()}
+
             </View>
+          </View>
                 );
     }
 }
@@ -514,22 +361,29 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: "row"
     },
     contentWrapper: {
         flexDirection: 'column',
         flex: 1
     },
+    videoThumnail: {
+      height: 90,
+      width: 160,
+      margin: "5%",
+      paddingRight: "20%",
+      backgroundColor: "#54c"
+    },
     buttonRow: {
-        flexDirection: "row"
+        width: "90%",
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems: "flex-end"
     },
     progressBar: {
         backgroundColor: "#333",
         width: 500
-    },
-
-    uploads: {
-
     },
 
     uploadedItem: {
@@ -547,14 +401,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         width: "95%",
         height: "95%",
-        padding: "5%",
+        padding: "1%",
+        paddingRight: "5%",
+        margin: "auto",
         alignSelf: "center",
-        alignItems: "center",
-        justifyContent: "center"
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        flexDirection: "row"
     },
     button: {
-        alignSelf: "center",
-        width: "100%",
+        flex: 1,
         height: "20%",
     },
     purpleButton: {
