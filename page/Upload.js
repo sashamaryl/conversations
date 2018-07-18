@@ -5,7 +5,10 @@ import {
     ScrollView,
     StyleSheet,
     Text,
+    TextInput,
+    Dimensions,
     TouchableHighlight,
+    Animated,
     TouchableWithoutFeedback,
     View,
     CheckBox,
@@ -18,14 +21,20 @@ import firebase from "react-native-firebase";
 import { Button } from "../component/Button.js";
 import Progress from "../component/Progress.js";
 
-import { H2, P, Strong } from "./styles.js";
+import { H2, H3, P, Bull, Strong } from "./styles.js";
 
+import { uploadText, InputField, uploadPages } from "./uploadHelper.js"
 
-const CHOOSER = 1
-const LOGGING_IN = 2
-const UPLOADING = 3
-const UPLOADED = 4
+const START = 1
+const CHOOSER = 2
+const LOGGING_IN = 3
+const UPLOADING = 4
+const UPLOADED = 5
+const MYVIDEOS = 6
 
+const width = Dimensions.get("window").width
+const height = Dimensions.get("window").height
+const backgroundPicture = require("../assets/skyline_bg.png");
 
 function formatSize(bytes) {
     return `${(bytes/1024/1024).toFixed(1)} MB`;
@@ -63,13 +72,15 @@ const UploadsList = ({videos, onDelete}) => (
 );
 
 
+
+
 export default class UploadPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: null,
             video: null,
-            state: CHOOSER,
+            state: START,
             checked: false,
             myKey: null,
             uploaded: []
@@ -88,7 +99,7 @@ export default class UploadPage extends Component {
             } else {
             // user doesn't have a device token yet
             console.log("user doesn't have a device token yet; fcmtoken = ", fcmToken);
-            } 
+            }
         }).catch(function(err) {
             console.error('An error occurred while retrieving token. ', err);
         });
@@ -260,13 +271,11 @@ export default class UploadPage extends Component {
         );
     }
 
-    renderChooser() {
+    renderChooser = () => {
         let {checked, video, upload, uploaded} = this.state;
         return (
             <View style={styles.contentWrapper}>
-                <P>
-                    INSERT EXPLANATORY TEXT HERE
-                </P>
+                <View style={{padding: "10%"}}>{uploadText.inputForm()}</View>
 
                 {uploaded.length > 0 && (
                      <P>
@@ -277,71 +286,104 @@ export default class UploadPage extends Component {
                     <Button onPress={this.selectVideo}>
                         Select a Video
                     </Button>
-
                     <Button onPress={this.upload}
                             disabled={!video} >
                         Upload {this.videoName()}
                     </Button>
-                    <Button onPress={() => this.setState({ state: UPLOADED })} disabled={!uploaded.length}>
+                    <Button onPress={() => this.setState({ state: UPLOADED })}
+                            disabled={!uploaded.length}>
                         View Previous Uploads
                     </Button>
                 </View>
-                    <TouchableWithoutFeedback onPress={() => this.setState({checked: !checked})}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <CheckBox
-                                value={checked}
-                                disabled={!video}
-                            />
-                            <Text style={{marginTop: 5}}> Notify me if my video is uploaded to YouTube</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
             </View>
         );
     }
 
+    renderStart() {
+      let { video, uploaded, state} = this.state;
+      return (
+      <View style={{flexDirection: "row"}}>
+        <View style={{flex: 5}}>
+          <H2>{uploadPages.title.START}</H2>
+          <P>{uploadPages.bodyText.START()}</P>
+          <Button
+            buttonStyle={styles.purpleButton}
+            style={styles.button}
+            onPress={() => this.setState({ state: CHOOSER })}
+            >upload video</Button>
+        </View>
+        <ScrollView style={{flex: 1, height: "100%", width: 10}}>
+          {UploadsList}
+          <View style={styles.videoThumnail}/>
+          <View style={styles.videoThumnail}/>
+          <View style={styles.videoThumnail}/>
+        </ScrollView>
+      </View>
+    )}
+
     renderContent() {
+      // return this.renderStart()
         switch(this.state.state) {
+            case START:
+                return this.renderStart();
+            case CHOOSER:
+                return this.renderChooser();
             case UPLOADING:
                 return this.renderUploader();
-
             case UPLOADED:
                 return this.renderUploaded();
 
             default:
-                return this.renderChooser();
+                return this.renderStart();
         }
-    }
+      }
+
 
     render() {
-        return (
-            <View style={styles.container}>
-                <H2>Upload Video</H2>
+      let { state } = this.state;
+      return (
+          <View style={styles.container}>
+              <Image source={backgroundPicture}
+                     style={styles.backImage}
+                     resizeMode="stretch" />
+              <View style={styles.innerView}>
+
                 {this.renderContent()}
+
             </View>
-        );
+          </View>
+                );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: "row"
     },
     contentWrapper: {
         flexDirection: 'column',
         flex: 1
     },
+    videoThumnail: {
+      height: 90,
+      width: 160,
+      margin: "5%",
+      paddingRight: "20%",
+      backgroundColor: "#54c"
+    },
     buttonRow: {
-        flexDirection: "row"
+        width: "90%",
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems: "flex-end"
     },
     progressBar: {
         backgroundColor: "#333",
         width: 500
-    },
-
-    uploads: {
-
     },
 
     uploadedItem: {
@@ -349,8 +391,36 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: "80%"
+    },
+    backImage: {
+        position: "absolute",
+        height: height,
+        width: width
+    },
+    innerView: {
+        backgroundColor: "#fff",
+        width: "95%",
+        height: "95%",
+        padding: "1%",
+        paddingRight: "5%",
+        margin: "auto",
+        alignSelf: "center",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        flexDirection: "row"
+    },
+    button: {
+        flex: 1,
+        height: "20%",
+    },
+    purpleButton: {
+        backgroundColor: "#262C66",
+        color: "white"
+    },
+    inputField: {
     }
-});
+  });
+
 
 UploadPage.navConfig = {
     screen: UploadPage,
