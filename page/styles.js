@@ -10,6 +10,12 @@ export const H2 = ({style, children}) => (
     </Text>
 );
 
+export const HMedium = ({style, children}) => (
+    <Text style={[styles.bodyText, styles.hMedium, style]}>
+        {children}
+    </Text>
+);
+
 export const H3 = ({style, children}) => (
     <Text style={[styles.bodyText, styles.h3, style]}>
         {children}
@@ -89,6 +95,10 @@ const styles = StyleSheet.create({
         /* textDecorationColor: "#ddd",
          * textDecorationLine: "underline" */
     },
+    hMedium: {
+         fontSize: 9*pr
+    },
+
     bodyText: {
         fontSize: 6*pr,
         lineHeight: 20,
@@ -149,7 +159,12 @@ const styles = StyleSheet.create({
     settingsRadioButton: {
         lineHeight: 10,
         alignSelf: 'flex-start'
+    },
+
+    PageTitle: {
+      fontSize: 10 * pr
     }
+
 });
 
 export default styles;

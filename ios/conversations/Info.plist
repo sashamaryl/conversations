@@ -36,24 +36,16 @@
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-<<<<<<< HEAD
-=======
 		<string>UIInterfaceOrientationPortrait</string>
->>>>>>> 63f1467b2d29da0135014914d0219fb368eecf5d
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-<<<<<<< HEAD
-	<string/>
-	<key>NSAppTransportSecurity</key>
-=======
 	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
->>>>>>> 63f1467b2d29da0135014914d0219fb368eecf5d
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -68,6 +60,5 @@
 	<key>UIAppFonts</key>
 	<array/>
 =======
->>>>>>> 63f1467b2d29da0135014914d0219fb368eecf5d
 </dict>
 </plist>
