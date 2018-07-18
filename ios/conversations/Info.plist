@@ -5,11 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-<<<<<<< HEAD
 	<string>Conversations</string>
-=======
-	<string>conversations</string>
->>>>>>> 63f1467b2d29da0135014914d0219fb368eecf5d
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -56,9 +52,7 @@
 			</dict>
 		</dict>
 	</dict>
-<<<<<<< HEAD
 	<key>UIAppFonts</key>
 	<array/>
-=======
 </dict>
 </plist>
