@@ -1,36 +1,204 @@
 import React from 'react';
-import { Linking, StyleSheet, Text, PixelRatio, View} from 'react-native';
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  PixelRatio,
+  View,
+  Dimensions
+} from 'react-native';
 
+
+//measured from phone
 const pr = PixelRatio.get();
+export const height = Dimensions.get("window").height;
+export const width = Dimensions.get("window").width;
+
+//our color palette
+const darkestBlue = "rgb(43, 35, 103)"; // backgrounds and text on white
+const linkBlue = "#4682b4"; // for links only
+
+//fudge factors
+export const bottomScrollerMarginFactor = 0.18; // fixes scroll pages getting stuck at the bottom
+
+/***
+H1
+H2
+H3
+H4
+H5
+H6
+
+Strong
+Em
+P
+A (link)
+BulletList (+ headers)
+
+InnerView
+ErrorBox
+horizontalLine
+text area (mostly horizontal margins)
+indent text area
 
 
-export const H2 = ({style, children}) => (
-    <Text style={[styles.bodyText, styles.h2, style]}>
-        {children}
-    </Text>
+placement of objects icons? size box for objects? grid placement?
+
+
+
+set colors
+text/reverse text
+selected/not selected
+icon/reverse icon
+backgrounds
+
+
+
+
+
+***** SETTINGS PAGE ******
+const mystyles = StyleSheet.create({
+  BackGroundStyle: {
+     flex: 1,
+     flexDirection: 'column'
+  },
+  SettingsTitle: {
+     paddingTop: 10*pr,
+     paddingLeft: 15*pr,
+  },
+  languageChooser: {
+      paddingLeft: 20*pr
+  },
+  AboutDesc: {
+     paddingLeft: 10*pr,
+     paddingRight: 10*pr,
+     marginBottom: 10*pr
+  },
+
+});
+
+
+****** UPLOAD PAGE *******
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: "row"
+    },
+    contentWrapper: {
+        flexDirection: 'column',
+        flex: 1
+    },
+    videoThumnail: {
+      height: 90,
+      width: 160,
+      margin: "5%",
+      paddingRight: "20%",
+      backgroundColor: "#54c"
+    },
+    buttonRow: {
+        width: "90%",
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems: "flex-end"
+    },
+    progressBar: {
+        backgroundColor: "#333",
+        width: 500
+    },
+
+    uploadedItem: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "80%"
+    },
+    backImage: {
+        position: "absolute",
+        height: height,
+        width: width
+    },
+    innerView: {
+        backgroundColor: "#fff",
+        width: "95%",
+        height: "95%",
+        padding: "1%",
+        paddingRight: "5%",
+        margin: "auto",
+        alignSelf: "center",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        flexDirection: "row"
+    },
+    button: {
+        flex: 1,
+        height: "20%",
+    },
+    purpleButton: {
+        backgroundColor: "#262C66",
+        color: "white"
+    },
+    inputField: {
+    }
+  });
+
+
+***/
+
+// mark a
+export const TextContainer = ({style, children}) => (
+  <Text style={[styles.bodyText, styles.textContainer, style]}>
+    {children}
+  </Text>
 );
 
-export const HMedium = ({style, children}) => (
-    <Text style={[styles.bodyText, styles.hMedium, style]}>
-        {children}
-    </Text>
+export const InsetView = ({style, children}) => (
+  <View style={[styles.insetView, style]}>
+      {children}
+  </View>
+);
+
+export const InsetText = ({style, children}) => (
+  <Text style={[styles.bodyText, styles.insetText, style]}>
+    {children}
+  </Text>
+);
+
+export const H1 = ({style, children}) => (
+  <Text style={[styles.bodyText, styles.h1, style]}>
+    {children}
+  </Text>
+);
+
+export const H2 = ({style, children}) => (
+  <Text style={[styles.bodyText, styles.h2, style]}>
+    {children}
+  </Text>
 );
 
 export const H3 = ({style, children}) => (
-    <Text style={[styles.bodyText, styles.h3, style]}>
-        {children}
+  <Text style={[styles.bodyText, styles.h3, style]}>
+    {children}
+  </Text>
+);
+
+export const H5 = ({style, children}) =>
+  <Text style={[styles.bodyText, styles.h5, style]}>
+    {children}
+  </Text>
+
+export const P = ({children, style}) => (
+    <Text style={[styles.bodyText, style]}>
+        { children }
     </Text>
 );
 
 export const ErrorBox = ({style, children}) => (
     <Text style={[styles.bodyText, styles.errorText, style]}>
         {children}
-    </Text>
-);
-
-export const P = ({children, style}) => (
-    <Text style={[styles.bodyText, style]}>
-        { children }
     </Text>
 );
 
@@ -75,7 +243,7 @@ export const BullHeaderMain = ({children}) => (
 export const HR = () => (
     <View style={styles.horizontalLine}></View>
 );
-
+//mark s
 const styles = StyleSheet.create({
     header: {
         color: "red",
@@ -89,21 +257,23 @@ const styles = StyleSheet.create({
     },
 
     h2: {
-        fontSize: 14 * pr,
-        lineHeight: 22 * pr,
-        color: 'rgb(43, 35, 103)'
+        fontSize: 8 * pr,
+        lineHeight: 10 * pr,
+        fontWeight: 'bold',
+        color: 'rgb(43, 35, 103)',
+        marginTop: height * 0.1
         /* textDecorationColor: "#ddd",
          * textDecorationLine: "underline" */
     },
-    hMedium: {
+    h3: {
          fontSize: 9*pr
     },
 
     bodyText: {
         fontSize: 6*pr,
         lineHeight: 20,
-        padding: 15,
-        textAlign: "justify"
+        padding: 5,
+        textAlign: "left"
     },
 
     errorText: {
@@ -146,6 +316,26 @@ const styles = StyleSheet.create({
         lineHeight: 20 * pr,
         paddingTop: 19,
         textAlign: "justify"
+    },
+    textContainer: {
+      paddingTop: 10*pr,
+      paddingLeft: 15*pr
+    },
+    insetText:{
+      padding: 10,
+    },
+    insetView: {
+      paddingLeft: 10*pr,
+      paddingRight: 18*pr,
+      paddingBottom: 10*pr,
+      backgroundColor: "white",
+      width: width*0.9,
+      height: height*0.75,
+      marginRight: width*0.01
+      // alignItems: "center",
+      // marginLeft: width*0.05,
+      // marginTop: height*0.05,
+       // marginBottom: height*bottomScrollerMarginFactor,
     },
 
     // These are the Settings Page Styles . Merge in for the about page from here

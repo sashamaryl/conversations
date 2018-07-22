@@ -8,17 +8,20 @@ import {
   TouchableHighlight,
   Image
 } from "react-native";
-import { H2, H3, P, Bull, Strong } from "./styles.js";
+import { H2, H3, P, Bull, Strong, liText, InsetText, InsetView, TextContainer } from "./styles.js";
 
 export const uploadText = {
   "shareStoryText": () => (
-      <Text> The women of Aashiyaan shared their strategies to stay safe.{"\n\n"}
-      <Text style={{paddingLeft: "10%"}}>• <Text style={{color: "rgb(43, 35, 103)", fontWeight:"bold"}}>Share YOUR strategy!</Text>{"\n"}
-        • Record a video with your device.{"\n"}
-        • Submit one story or strategy per video.{"\n"}
-        • Keep clips short. We recommend less than 2 minutes.{"\n"}
-        • Your story may be added to Aashiyaan!</Text></Text>
-  ),
+      <InsetText>
+          <P>The women of Aashiyaan shared their strategies to stay safe.</P>
+          <Strong> Share YOUR strategy!</Strong>
+          <Text><Bull> Record a video with your device.</Bull></Text>
+          <Text><Bull> Submit one story or strategy per video.</Bull></Text>
+          <Text><Bull> Keep clips short. We recommend less than 2 minutes.</Bull></Text>
+          <Text><Bull> Your story may be added to Aashiyaan!</Bull></Text>
+       </InsetText>
+    ),
+
   "inputForm": () => (
       <View>
         <InputField
@@ -42,11 +45,11 @@ export const uploadText = {
   export const uploadPages = {
       title: {
         START: "Share Your Story",
-        CHOOSER: () => <P>Add Details</P>,
-        LOGGING_IN: () => <P></P>,
-        UPLOADING: () => <P></P>,
-        UPLOADED: () => <P>Thanks for Sharing!</P>,
-        MYVIDEOS: () => <P></P>,
+        CHOOSER: "Add Details",
+        LOGGING_IN: "",
+        UPLOADING: "",
+        UPLOADED: "Thanks for Sharing!",
+        MYVIDEOS: "",
       },
       bodyText: {
         START: () => uploadText.shareStoryText(),
@@ -70,12 +73,12 @@ export const uploadText = {
         MYVIDEOS: () => "START",
       },
       buttonText: {
-        START: () => <P>Start,</P>,
-        CHOOSER: () => <P>Upload Video,</P>,
-        LOGGING_IN: () => <P>,</P>,
-        UPLOADING: () => <P>,</P>,
-        UPLOADED:  () => <P>home,</P>,
-        MYVIDEOS:  () => <P></P>,
+        START: ()=> <P>Start</P>,
+        CHOOSER: ()=> <P>Upload Video</P>,
+        LOGGING_IN: ()=> <P></P>,
+        UPLOADING: ()=> <P></P>,
+        UPLOADED: ()=>  <P>Home</P>,
+        MYVIDEOS: ()=>  <P></P>,
       },
     };
 

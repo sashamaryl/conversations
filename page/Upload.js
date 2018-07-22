@@ -21,7 +21,7 @@ import firebase from "react-native-firebase";
 import { Button } from "../component/Button.js";
 import Progress from "../component/Progress.js";
 
-import { H2, H3, P, Bull, Strong } from "./styles.js";
+import { H2, H3, P, Bull, Strong, InsetText, InsetView, TextContainer } from "./styles.js";
 
 import { uploadText, InputField, uploadPages } from "./uploadHelper.js"
 
@@ -302,23 +302,18 @@ export default class UploadPage extends Component {
     renderStart() {
       let { video, uploaded, state} = this.state;
       return (
-      <View style={{flexDirection: "row"}}>
-        <View style={{flex: 5}}>
+      <InsetView>
+        <ScrollView style={{flex: 5}}>
           <H2>{uploadPages.title.START}</H2>
-          <P>{uploadPages.bodyText.START()}</P>
-          <Button
-            buttonStyle={styles.purpleButton}
-            style={styles.button}
-            onPress={() => this.setState({ state: CHOOSER })}
-            >upload video</Button>
-        </View>
-        <ScrollView style={{flex: 1, height: "100%", width: 10}}>
-          {UploadsList}
-          <View style={styles.videoThumnail}/>
-          <View style={styles.videoThumnail}/>
-          <View style={styles.videoThumnail}/>
-        </ScrollView>
-      </View>
+          {uploadPages.bodyText.START()}
+        <Button
+          buttonStyle={styles.purpleButton}
+          style={styles.button}
+          onPress={() => this.setState({ state: CHOOSER })}>
+          {uploadPages.buttonText.START()}
+        </Button>
+      </ScrollView>
+    </InsetView>
     )}
 
     renderContent() {
@@ -346,11 +341,11 @@ export default class UploadPage extends Component {
               <Image source={backgroundPicture}
                      style={styles.backImage}
                      resizeMode="stretch" />
-              <View style={styles.innerView}>
+            <InsetView>
 
                 {this.renderContent()}
 
-            </View>
+            </InsetView>
           </View>
                 );
     }

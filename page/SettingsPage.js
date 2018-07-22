@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View , StyleSheet, Dimensions, PixelRatio, ImageBackground, ScrollView} from 'react-native';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import styles , {P,H2,HR, H3, HMedium} from "././styles.js";
+import styles , {P,H2,HR,H3} from "././styles.js";
 import {getLocalizedString} from ".././Languages/LanguageChooser";
 import {ProjectDescription, ProjectCredits} from "./AboutDescriptions";
 import {saveSetting, getSetting} from ".././StorageUtils";
@@ -49,7 +49,7 @@ export default class SettingsPage extends Component {
 
     let localizedStrMap = getLocalizedString(global.LANG);
     let AboutDescription = ProjectDescription[global.LANG];
-    
+
     return (
       <ImageBackground
           source={ homeScreenImage }
@@ -59,10 +59,10 @@ export default class SettingsPage extends Component {
         <ScrollView style={{ backgroundColor: "white", width: width*0.9, height: height, marginLeft: width*0.05, marginTop: height*0.05, marginBottom: height*bottomScrollerMarginFactor}}>
            <View style={mystyles.BackGroundStyle} >
               <View style={mystyles.SettingsTitle}>
-                    <HMedium>{localizedStrMap["settingsTitle"]}</HMedium>
+                    <H3>{localizedStrMap["settingsTitle"]}</H3>
               </View>
               <View style={mystyles.languageChooser}>
-                  <HMedium>{localizedStrMap["chooseLanguageOption"]}</HMedium>
+                  <H3>{localizedStrMap["chooseLanguageOption"]}</H3>
               </View>
               <RadioForm style={styles.radioForm}
                   radio_props={radio_props}
@@ -75,16 +75,16 @@ export default class SettingsPage extends Component {
                 />
                 <HR />
                 <View style={mystyles.SettingsTitle}>
-                  <HMedium>{localizedStrMap["aboutTheProjectTitle"]}</HMedium>
+                  <H3>{localizedStrMap["aboutTheProjectTitle"]}</H3>
                 </View>
                 <View style={mystyles.AboutDesc}>
                     <AboutDescription />
                 </View>
                 <HR />
                 <View style={mystyles.SettingsTitle}>
-                    <HMedium>
+                    <H3>
                         {localizedStrMap["acknowledgementsTitle"]}
-                    </HMedium>
+                    </H3>
                 </View>
                 <View>
                     <ProjectCredits>{localizedStrMap}</ProjectCredits>
