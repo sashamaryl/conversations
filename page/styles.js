@@ -10,16 +10,44 @@ import {
 
 
 //measured from phone
-const pr = PixelRatio.get();
+export const pr = PixelRatio.get();
 export const height = Dimensions.get("window").height;
 export const width = Dimensions.get("window").width;
 
 //our color palette
-const darkestBlue = "rgb(43, 35, 103)"; // backgrounds and text on white
+const darkestBlue = "rgb(43, 35, 103)"; // backgrounds, buttons, text on white
 const linkBlue = "#4682b4"; // for links only
+const lightBlue = "rgb(43, 35, 103)";
+const ourWhite = "#ffffff";
+
+export const color = {
+  background: darkestBlue,
+  insetFrame: ourWhite,
+  buttons: darkestBlue,
+  selectedButtons: lightBlue,
+  textOnWhite: darkestBlue,
+  links: linkBlue,
+}
 
 //fudge factors
-export const bottomScrollerMarginFactor = 0.18; // fixes scroll pages getting stuck at the bottom
+export const bottomScrollerMarginFactor = 0.18;// fixes scroll pages getting stuck at the bottom
+
+
+export const InsetFrame = (children) => {
+  return (
+        <ScrollView style={{
+          backgroundColor: insetFrame,
+          width: width*0.9,
+          height: height,
+          marginLeft: width*0.05,
+          marginTop: height*0.05,
+          marginBottom: height*bottomScrollerMarginFactor,
+          padding: 10*pr,
+        }}>{children}</ScrollView>
+      )
+}
+
+export const homeScreenImage = require('.././assets/BackgroundForAppLanding.png');
 
 /***
 H1
@@ -51,10 +79,6 @@ text/reverse text
 selected/not selected
 icon/reverse icon
 backgrounds
-
-
-
-
 
 ***** SETTINGS PAGE ******
 const mystyles = StyleSheet.create({
@@ -146,6 +170,53 @@ const styles = StyleSheet.create({
   });
 
 
+******** HELP PAGE *******
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+
+    section: {
+        paddingLeft: 40
+    },
+
+    sectionHead: {
+        backgroundColor: "white",
+        borderTopColor: "#aaa",
+        borderTopWidth: 1,
+        flex: 1,
+        flexDirection: "row",
+    },
+
+    sectionIcon: {
+        height: 40,
+        width: 40,
+        position: "absolute",
+        left: 0,
+        top: 10
+    },
+
+    sectionTitle: {
+        fontWeight: "bold",
+        paddingLeft: 50
+    },
+
+    listenButton: {
+        position: "absolute",
+        right: 10,
+        top: 10
+    },
+
+    listenButtonImageStyle: {
+        height: 50,
+        width: 50
+    },
+
+    listenButtonImageLoadingStyle: {
+        opacity: 0.5
+    }
+})
+
 ***/
 
 // mark a
@@ -155,8 +226,8 @@ export const TextContainer = ({style, children}) => (
   </Text>
 );
 
-export const InsetView = ({style, children}) => (
-  <View style={[styles.insetView, style]}>
+export const InsetView = ({style, children, props}) => (
+  <View style={[styles.insetView, style]} props={props}>
       {children}
   </View>
 );
@@ -185,6 +256,11 @@ export const H3 = ({style, children}) => (
   </Text>
 );
 
+export const H4 = ({style, children}) => (
+  <Text style={[styles.bodyText, styles.h4, style]}>
+    {children}
+  </Text>
+)
 export const H5 = ({style, children}) =>
   <Text style={[styles.bodyText, styles.h5, style]}>
     {children}
@@ -266,9 +342,12 @@ const styles = StyleSheet.create({
          * textDecorationLine: "underline" */
     },
     h3: {
-         fontSize: 9*pr
+         fontSize: 9*pr,
+         color: darkestBlue,
     },
-
+    h4: {
+      fontSize: 7*pr,
+    },
     bodyText: {
         fontSize: 6*pr,
         lineHeight: 20,
@@ -353,6 +432,42 @@ const styles = StyleSheet.create({
 
     PageTitle: {
       fontSize: 10 * pr
+    },
+
+    // These are unique settings from Help.js to be added or joined with styles above.
+    sectionHead: {
+        backgroundColor: "white",
+        borderTopColor: "#aaa",
+        borderTopWidth: 1,
+        flex: 1,
+        flexDirection: "row",
+    },
+
+    sectionIcon: {
+        height: 40,
+        width: 40,
+        position: "absolute",
+        left: 0,
+        top: 10
+    },
+    sectionTitle: {
+        fontWeight: "bold",
+        paddingLeft: 50
+    },
+
+    listenButton: {
+        position: "absolute",
+        right: 10,
+        top: 10
+    },
+
+    listenButtonImageStyle: {
+        height: 50,
+        width: 50
+    },
+
+    listenButtonImageLoadingStyle: {
+        opacity: 0.5
     }
 
 });

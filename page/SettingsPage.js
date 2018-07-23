@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Text, View , StyleSheet, Dimensions, PixelRatio, ImageBackground, ScrollView} from 'react-native';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import styles , {P,H2,HR,H3} from "././styles.js";
+import styles , {P,H2,HR,H3,H4, pr, bottomScrollerMarginFactor, height, width} from "././styles.js";
 import {getLocalizedString} from ".././Languages/LanguageChooser";
 import {ProjectDescription, ProjectCredits} from "./AboutDescriptions";
 import {saveSetting, getSetting} from ".././StorageUtils";
 
 
-const pr = PixelRatio.get();
+// const pr = PixelRatio.get();
 const radioToLanguageMap = {
   0: 'English',
   1 : 'Hindi'
 };
 
-const bottomScrollerMarginFactor = 0.18;
+// const bottomScrollerMarginFactor = 0.18;
 
 const languageToRadioMap = {
   'English': 0,
@@ -43,8 +43,8 @@ export default class SettingsPage extends Component {
 
 
   render() {
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
+    // const width = Dimensions.get('window').width;
+    // const height = Dimensions.get('window').height;
     let homeScreenImage = require('.././assets/BackgroundForAppLanding.png');
 
     let localizedStrMap = getLocalizedString(global.LANG);
@@ -62,7 +62,7 @@ export default class SettingsPage extends Component {
                     <H3>{localizedStrMap["settingsTitle"]}</H3>
               </View>
               <View style={mystyles.languageChooser}>
-                  <H3>{localizedStrMap["chooseLanguageOption"]}</H3>
+                  <H4>{localizedStrMap["chooseLanguageOption"]}</H4>
               </View>
               <RadioForm style={styles.radioForm}
                   radio_props={radio_props}
@@ -104,7 +104,7 @@ const mystyles = StyleSheet.create({
   },
   SettingsTitle: {
      paddingTop: 10*pr,
-     paddingLeft: 15*pr,
+     paddingLeft: 10*pr,
   },
   languageChooser: {
       paddingLeft: 20*pr
