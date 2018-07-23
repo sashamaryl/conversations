@@ -5,7 +5,9 @@ import {
   Text,
   PixelRatio,
   View,
-  Dimensions
+  Dimensions, 
+  ScrollView, 
+  TouchableOpacity
 } from 'react-native';
 
 
@@ -18,13 +20,16 @@ export const width = Dimensions.get("window").width;
 const darkestBlue = "rgb(43, 35, 103)"; // backgrounds, buttons, text on white
 const linkBlue = "#4682b4"; // for links only
 const lightBlue = "rgb(43, 35, 103)";
-const ourWhite = "#ffffff";
+const ourWhite = "rgb(255, 255, 255)";
 
 export const color = {
   background: darkestBlue,
   insetFrame: ourWhite,
-  buttons: darkestBlue,
-  selectedButtons: lightBlue,
+  buttons: {
+      background: darkestBlue,
+      text: ourWhite, 
+      selected: lightBlue,
+  }, 
   textOnWhite: darkestBlue,
   links: linkBlue,
 }
@@ -33,19 +38,25 @@ export const color = {
 export const bottomScrollerMarginFactor = 0.18;// fixes scroll pages getting stuck at the bottom
 
 
-export const InsetFrame = (children) => {
-  return (
-        <ScrollView style={{
-          backgroundColor: insetFrame,
-          width: width*0.9,
-          height: height,
-          marginLeft: width*0.05,
-          marginTop: height*0.05,
-          marginBottom: height*bottomScrollerMarginFactor,
-          padding: 10*pr,
-        }}>{children}</ScrollView>
-      )
-}
+export const InsetFrame = (ref, onLayout, stickyHeaderIndices, children) => (
+        <ScrollView 
+            style={{
+            backgroundColor: color.insetFrame,
+            width: width*0.9,
+            height: height,
+            marginLeft: width*0.05,
+            marginTop: height*0.05,
+            marginBottom: height*bottomScrollerMarginFactor,
+            padding: 10*pr,
+            }}
+            ref={scroller => { this._scroller = scroller; }}
+            onLayout={this.onLayout}
+            stickyHeaderIndices={stickyHeaderIndices}
+            >
+            {children}
+        </ScrollView>
+    );
+
 
 export const homeScreenImage = require('.././assets/BackgroundForAppLanding.png');
 
@@ -319,6 +330,16 @@ export const BullHeaderMain = ({children}) => (
 export const HR = () => (
     <View style={styles.horizontalLine}></View>
 );
+
+export const FancyButton = ({style, children}) => (
+    <TouchableOpacity 
+        style={[style, styles.fancyButton]}>
+        {children}
+    </TouchableOpacity>
+);
+
+
+
 //mark s
 const styles = StyleSheet.create({
     header: {
@@ -410,12 +431,28 @@ const styles = StyleSheet.create({
       backgroundColor: "white",
       width: width*0.9,
       height: height*0.75,
-      marginRight: width*0.01
+      marginRight: width*0.01,
       // alignItems: "center",
       // marginLeft: width*0.05,
       // marginTop: height*0.05,
        // marginBottom: height*bottomScrollerMarginFactor,
     },
+    fancyButton: {
+        height: 20*pr,
+        width: 50*pr, 
+        alignSelf: "center",
+        fontSize: 8*pr, 
+        backgroundColor: color.buttons.background, 
+        color: color.buttons.text,
+        flex: 1, 
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+
+
+
+
 
     // These are the Settings Page Styles . Merge in for the about page from here
     settingsRadioFormLabel: {

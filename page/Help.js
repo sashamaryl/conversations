@@ -12,7 +12,15 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import styles, { A, H3, H4, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetText, InsetView, ImageBackground, homeScreenImage, height, width } from "./styles.js";
+import styles, { A, H3, H4, Em, Bull, P, Strong, BullHeader, BullHeaderMain,
+    InsetText, 
+    InsetView, 
+    ImageBackground, 
+    homeScreenImage, 
+    height, 
+    width, 
+    InsetFrame 
+} from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -373,49 +381,51 @@ export class SectionedScroller extends Component {
 
         return (
           <View>
-            <ImageBackground
+            <Image
                 source={ homeScreenImage }
                 imageStyle={{resizeMode: 'cover'}}
-                style={{width: width, height: height}}
-            >
-            <InsetView>
-              <ScrollView ref={scroller => { this._scroller = scroller; }}
-                          style={style}
-                          onLayout={ this.onLayout }
-                          stickyHeaderIndices={children.map((_, i) => i*2)}>
-                  {React.Children.map(children, (section) => {
-                       let {title} = section.props,
-                           icon = HelpIcons[section.key],
-                           iconComponent = icon && (<Image source={icon} style={styles.sectionIcon}/>),
-                           active = soundKey === section.key,
-                           sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
-                           sectionTitle = localizedText[section.key].title;
+                style={{width: width, height: height, position: "absolute"}}
+                resizeMode="cover"
+            />
+        <InsetView style={[style, {alignSelf: "center", height: height}]} >
+            <ScrollView 
+            ref={scroller => { this._scroller = scroller; }}
+                    // style={[style.InsetView, {alignSelf: "center"}]}
+                    onLayout={ this.onLayout }
+                    stickyHeaderIndices={children.map((_, i) => i*2)}>
+                {React.Children.map(children, (section) => {
+                    let {title} = section.props,
+                        icon = HelpIcons[section.key],
+                        iconComponent = icon && (<Image source={icon} style={styles.sectionIcon}/>),
+                        active = soundKey === section.key,
+                        sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
+                        sectionTitle = localizedText[section.key].title;
 
-                       return [
-                           (
-                             <View style={styles.sectionHead} key={`${section.key}-head`}>
-                               {iconComponent}
-                               <H4 style={[styles.sectionTitle, styles.textContainer]}>
-                                   { sectionTitle }
-                               </H4>
-                               <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
-                                       style={styles.listenButton}
-                                       imageStyle={[styles.listenButtonImageStyle,
-                                                    active && soundLoading && styles.listenButtonImageLoadingStyle]}
-                                       onPress={() => this.playSound(section.key)}
-                               />
-                           </View>),
-                           (<View ref={section.key}
-                              style={[styles.bodyText, {minHeight: pageHeight}]}
-                              key={`${section.key}-body`}>
-                              { sectionBody }
-                           </View>)
-                       ];
-                  })}
-                  {children}
-              </ScrollView>
-          </InsetView>
-        </ImageBackground>
+                    return [
+                        ( <View style={styles.sectionHead} key={`${section.key}-head`}>
+                            {iconComponent}
+                            <H4 style={[styles.sectionTitle, styles.textContainer]}>
+                                { sectionTitle }
+                            </H4>
+                            <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
+                                    style={styles.listenButton}
+                                    imageStyle={[styles.listenButtonImageStyle,
+                                                active && soundLoading && styles.listenButtonImageLoadingStyle]}
+                                    onPress={() => this.playSound(section.key)}
+                            />
+                            </View>
+                        ),
+                        ( <View ref={section.key}
+                            style={[styles.bodyText, {minHeight: pageHeight}]}
+                            key={`${section.key}-body`}>
+                            { sectionBody }
+                            </View>
+                        )];
+                })}
+            {children}
+        </ScrollView>
+        </InsetView>
+              
         </View>
       );
     }

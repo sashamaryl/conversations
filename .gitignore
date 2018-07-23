@@ -59,3 +59,10 @@ MISC/
 
 # Bundle artifact
 *.jsbundle
+\.tags
+.tags1
+conversations-d.ipr
+conversations-d.iws
+gradle/
+gradlew
+gradlew.bat

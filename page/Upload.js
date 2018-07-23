@@ -21,7 +21,7 @@ import firebase from "react-native-firebase";
 import { Button } from "../component/Button.js";
 import Progress from "../component/Progress.js";
 
-import { H2, H3, P, Bull, Strong, InsetText, InsetView, TextContainer } from "./styles.js";
+import { H2, H3, P, Bull, Strong, InsetText, InsetView, TextContainer, FancyButton } from "./styles.js";
 
 import { uploadText, InputField, uploadPages } from "./uploadHelper.js"
 
@@ -306,12 +306,12 @@ export default class UploadPage extends Component {
         <ScrollView style={{flex: 5}}>
           <H2>{uploadPages.title.START}</H2>
           {uploadPages.bodyText.START()}
-        <Button
-          buttonStyle={styles.purpleButton}
+        <FancyButton
+          FancyButtonStyle={styles.purpleButton}
           style={styles.button}
           onPress={() => this.setState({ state: CHOOSER })}>
           {uploadPages.buttonText.START()}
-        </Button>
+        </FancyButton>
       </ScrollView>
     </InsetView>
     )}

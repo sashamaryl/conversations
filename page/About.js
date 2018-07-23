@@ -185,14 +185,14 @@ export default class AboutPage extends Component {
         return (
             <IndicatorViewPager style={styles.container}
                                 indicator={<PagerDotIndicator pageCount={2}/>}>
-                <InsetView>
+        
                   <View>
                     <Description />
                 </View>
                 <View>
                     <ProjectCredits/>
                 </View>
-              </InsetView>
+            
             </IndicatorViewPager>
         );
     }
