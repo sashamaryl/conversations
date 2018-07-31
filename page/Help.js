@@ -4,7 +4,7 @@ import ReactNative, {
     ScrollView,
     StyleSheet,
     Text,
-    View
+    View, 
 } from 'react-native';
 import Sound from "react-native-sound";
 
@@ -12,7 +12,7 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import pageStyles, { A, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain } from "./styles.js";
+import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, listenButtonImageStyle, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -47,7 +47,7 @@ const translations = {
             title: 'Objects',
             audio: require("../assets/audio/English_audio/help_home.wav"),
             text: () => (
-                <View>
+                <Text>
                     <P>Explore stories of the invisible women of Delhi as told by them.</P>
                     <P>
                         <Strong>Objects:</Strong> To play a video clip, select one of the 
@@ -58,7 +58,7 @@ const translations = {
                         <Strong>More Objects:</Strong> You can see more stories
                         by tapping the arrows ({'< >'}) or swiping to the left or right. 
                     </P>
-                </View>                
+                </Text>                
             )
         },
         share: {
@@ -75,7 +75,7 @@ const translations = {
             title: 'Remnants',
             audio: require("../assets/audio/English_audio/help_remnants_full_section.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P>
                         After viewing 2 videos a new choice (Fork & Knife icon) becomes available 
                         in the navigation bar at the bottom of the screen. Tapping the icon brings 
@@ -91,7 +91,7 @@ const translations = {
                         the Remnants page you will start to see something revealed behind the tiles. 
                         Listen to all the remnants to reveal the entire hidden image.
                     </P>
-                </View>
+                </Text>
             )
         },
         settings: {
@@ -109,7 +109,7 @@ const translations = {
             title: 'Resources',
             audio: require("../assets/audio/English_audio/help_resources.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P><Em>I’m interested in knowing more</Em></P>
                     <P>
                         Visit <A href="http://www.aashiyaan.org">www.aashiyaan.org</A> to learn more
@@ -136,7 +136,7 @@ const translations = {
                     <P>Self defense        https://www.slaponline.org/</P>
                     <P>Film for Change    https://krititeam.blogspot.com/</P>
                     <P>Visit www.aashiyaan.org for more...</P>
-                </View>
+                </Text>
             )
         },
         about: {
@@ -166,7 +166,7 @@ const translations = {
             title: 'होम',
             audio: require("../assets/audio/Hindi_audio/home_hindi.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P>दिल्ली में रहने वाली महिलाओं की अदृश्य जीवनियों को देखें।</P>
                     <P>
                         <Strong>वस्तु:</Strong> वीडियो क्लिप चलाने के लिए, स्क्रीन के ऊपरी 
@@ -179,7 +179,7 @@ const translations = {
                     </P>
                     <P><Em>*टैप: उंगली से एक बार दबाकर उठाना।</Em></P>
                     <P><Em>**स्वाइप: उंगली से दबाकर किसी दिशा में खींचना।</Em></P>
-                </View>
+                </Text>
             ),
         },
         share: {
@@ -196,7 +196,7 @@ const translations = {
             title: 'निशान',
             audio: require("../assets/audio/Hindi_audio/remnants_hindi.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P>
                         किन्हीं २ वीडियो को देखने के बाद स्क्रीन के निचले भाग में नेविगेशन बार में एक नया विकल्प 
                         (कांटे और छूरी का चिन्ह) उपलब्ध होता है | चिन्ह पर टैप करने से आपको "निशान" अध्याय 
@@ -211,7 +211,7 @@ const translations = {
                         उस टाइल के पीछे कुछ प्रकट होता पाएंगे। इस छिपी हुई छवि को प्रकट करने के लिए सभी 
                         निशानों की कहानी को सुनना होगा।
                     </P>
-                </View>
+                </Text>
             )
         },        
         settings: {
@@ -288,7 +288,7 @@ export class SectionedScroller extends Component {
         if (child != null) {
             let nodeHandle = ReactNative.findNodeHandle(this._scroller);
             child.measureLayout(nodeHandle, (_x, y) => {
-                this._scroller.scrollTo({x: 0, y: y-30, animated: animated});
+                this._scroller.scrollTo({x: 0, y: y, animated: animated});
             }, (error) => {
                 console.log(error);
             })
@@ -373,47 +373,50 @@ export class SectionedScroller extends Component {
             localizedText = translations[selectedLang]
 
         return (
-            <ScrollView ref={scroller => { this._scroller = scroller; }}
-                        style={style}
-                        onLayout={ this.onLayout }
-                        stickyHeaderIndices={children.map((_, i) => i*2)}>
-                {React.Children.map(children, (section) => {
-                     let {title} = section.props,
-                         icon = HelpIcons[section.key],
-                         iconComponent = icon && (<Image source={icon} style={styles.sectionIcon}/>),
-                         active = soundKey === section.key,
-                         sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
-                         sectionTitle = localizedText[section.key].title;
-
-                     return [
-                         (<View style={styles.sectionHead} key={`${section.key}-head`}>
-                             {iconComponent}
-                             <H3 style={styles.sectionTitle}>
-                                 { sectionTitle }
-                             </H3>
-                             <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
-                                     style={styles.listenButton}
-                                     imageStyle={[styles.listenButtonImageStyle,
-                                                  active && soundLoading && styles.listenButtonImageLoadingStyle]}
-                                     onPress={() => this.playSound(section.key)}
-                             />
-                         </View>),
-                         (<View ref={section.key}
-                            style={[styles.section, {minHeight: 0.5 * pageHeight}]}
-                            key={`${section.key}-body`}>
-                            { sectionBody }
-                         </View>)
-                     ];
-                })}
-                {children}
-            </ScrollView>
-        );
+            <View> 
+                <BackgroundImage />
+                    <ScrollView ref={scroller => { this._scroller = scroller; }}
+                                onLayout={ this.onLayout }
+                                stickyHeaderIndices={children.map((_, i) => i*2)}>
+                        {React.Children.map(children, (section) => {
+                            let {title} = section.props,
+                            icon = HelpIcons[section.key],
+                            iconComponent = icon && (<Image source={icon} style={styles.sectionIcon}/>) || (<View style={styles.sectionIcon}></View>),
+                            active = soundKey === section.key,
+                            sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
+                            sectionTitle = localizedText[section.key].title;
+                            
+                            return [
+                                    (
+                                    <ScrollHeader key={`${section.key}-head`}>
+                                        { iconComponent }
+                                        <H1>
+                                        { sectionTitle }
+                                        </H1>
+                                        <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
+                                                imageStyle={
+                                                    [styles.listenButtonImageStyle, active && soundLoading && styles.listenButtonImageStyle] }
+                                                onPress={() => this.playSound(section.key)}
+                                        />
+                                    </ScrollHeader>
+                                   ),
+                                    (<View ref={section.key}
+                                           style={styles.insetArea}
+                                            key={`${section.key}-body`}>
+                                        { sectionBody }
+                                    </View>),
+                                ];
+                        })}
+                        {children}
+                    </ScrollView>
+            </View>
+           );
     }
 }
 
 
 // Placeholder
-const Section = (props) => (<Text/>);
+const Section = (props) => (<Text />);
 
 const sectionLookup = {
     Chooser: 'home',
@@ -448,8 +451,7 @@ export default class HelpPage extends Component {
         
 
         return (
-            <SectionedScroller selected={section}
-                               style={{backgroundColor: "white"}}>
+            <SectionedScroller selected={section} >
                 <Section key="home"></Section>
                 <Section key="share"></Section>
                 <Section key="remnants"></Section>
@@ -463,57 +465,12 @@ export default class HelpPage extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-
-    section: {
-        paddingLeft: 40
-    },
-
-    sectionHead: {
-        backgroundColor: "white",
-        borderTopColor: "#aaa",
-        borderTopWidth: 1,
-        flex: 1,
-        flexDirection: "row",
-    },
-
-    sectionIcon: {
-        height: 40,
-        width: 40,
-        position: "absolute",
-        left: 0,
-        top: 10
-    },
-
-    sectionTitle: {
-        fontWeight: "bold",
-        paddingLeft: 50
-    },
-
-    listenButton: {
-        position: "absolute",
-        right: 10,
-        top: 10
-    },
-
-    listenButtonImageStyle: {
-        height: 50,
-        width: 50
-    },
-
-    listenButtonImageLoadingStyle: {
-        opacity: 0.5
-    }
-})
 
 HelpPage.navConfig = {
     screen: HelpPage,
 
     navigationOptions: ({navigation}) => ({
-        headerStyle: pageStyles.header,
+        headerStyle: styles.header,
         headerTitle: "How to Use",
         initialRouteParams: { section: "home" }
     })
