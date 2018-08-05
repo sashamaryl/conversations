@@ -12,7 +12,7 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import pageStyles, { A, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain } from "./styles.js";
+import pageStyles, { A, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, InsetText } from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -47,7 +47,7 @@ const translations = {
             title: 'Objects',
             audio: require("../assets/audio/English_audio/help_home.wav"),
             text: () => (
-                <View>
+                <Text>
                     <P>Explore stories of the invisible women of Delhi as told by them.</P>
                     <P>
                         <Strong>Objects:</Strong> To play a video clip, select one of the 
@@ -58,7 +58,7 @@ const translations = {
                         <Strong>More Objects:</Strong> You can see more stories
                         by tapping the arrows ({'< >'}) or swiping to the left or right. 
                     </P>
-                </View>                
+                </Text>                
             )
         },
         share: {
@@ -75,7 +75,7 @@ const translations = {
             title: 'Remnants',
             audio: require("../assets/audio/English_audio/help_remnants_full_section.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P>
                         After viewing 2 videos a new choice (Fork & Knife icon) becomes available 
                         in the navigation bar at the bottom of the screen. Tapping the icon brings 
@@ -91,7 +91,7 @@ const translations = {
                         the Remnants page you will start to see something revealed behind the tiles. 
                         Listen to all the remnants to reveal the entire hidden image.
                     </P>
-                </View>
+                </Text>
             )
         },
         settings: {
@@ -109,7 +109,7 @@ const translations = {
             title: 'Resources',
             audio: require("../assets/audio/English_audio/help_resources.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P><Em>I’m interested in knowing more</Em></P>
                     <P>
                         Visit <A href="http://www.aashiyaan.org">www.aashiyaan.org</A> to learn more
@@ -136,7 +136,7 @@ const translations = {
                     <P>Self defense        https://www.slaponline.org/</P>
                     <P>Film for Change    https://krititeam.blogspot.com/</P>
                     <P>Visit www.aashiyaan.org for more...</P>
-                </View>
+                </Text>
             )
         },
         about: {
@@ -166,7 +166,7 @@ const translations = {
             title: 'होम',
             audio: require("../assets/audio/Hindi_audio/home_hindi.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P>दिल्ली में रहने वाली महिलाओं की अदृश्य जीवनियों को देखें।</P>
                     <P>
                         <Strong>वस्तु:</Strong> वीडियो क्लिप चलाने के लिए, स्क्रीन के ऊपरी 
@@ -179,7 +179,7 @@ const translations = {
                     </P>
                     <P><Em>*टैप: उंगली से एक बार दबाकर उठाना।</Em></P>
                     <P><Em>**स्वाइप: उंगली से दबाकर किसी दिशा में खींचना।</Em></P>
-                </View>
+                </Text>
             ),
         },
         share: {
@@ -196,7 +196,7 @@ const translations = {
             title: 'निशान',
             audio: require("../assets/audio/Hindi_audio/remnants_hindi.mp3"),
             text: () => (
-                <View>
+                <Text>
                     <P>
                         किन्हीं २ वीडियो को देखने के बाद स्क्रीन के निचले भाग में नेविगेशन बार में एक नया विकल्प 
                         (कांटे और छूरी का चिन्ह) उपलब्ध होता है | चिन्ह पर टैप करने से आपको "निशान" अध्याय 
@@ -211,7 +211,7 @@ const translations = {
                         उस टाइल के पीछे कुछ प्रकट होता पाएंगे। इस छिपी हुई छवि को प्रकट करने के लिए सभी 
                         निशानों की कहानी को सुनना होगा।
                     </P>
-                </View>
+                </Text>
             )
         },        
         settings: {
@@ -385,10 +385,11 @@ export class SectionedScroller extends Component {
                          sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
                          sectionTitle = localizedText[section.key].title;
 
-                     return [
-                         (<View style={styles.sectionHead} key={`${section.key}-head`}>
+                    return (
+                         <InsetView> 
+                             <View key={`${section.key}-head`}>
                              {iconComponent}
-                             <H3 style={styles.sectionTitle}>
+                             <H3>
                                  { sectionTitle }
                              </H3>
                              <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
@@ -397,15 +398,15 @@ export class SectionedScroller extends Component {
                                                   active && soundLoading && styles.listenButtonImageLoadingStyle]}
                                      onPress={() => this.playSound(section.key)}
                              />
-                         </View>),
-                         (<View ref={section.key}
-                            style={[styles.section, {minHeight: 0.5 * pageHeight}]}
-                            key={`${section.key}-body`}>
-                            { sectionBody }
-                         </View>)
-                     ];
-                })}
-                {children}
+                             </View>
+                            <View ref={section.key}
+                                // style={[styles.section, {minHeight: 0.5 * pageHeight}]}
+                                key={`${section.key}-body`}>
+                                { sectionBody }
+                            </View>
+                       {children}
+                        </InsetView> 
+                    )}}
             </ScrollView>
         );
     }
@@ -449,7 +450,7 @@ export default class HelpPage extends Component {
 
         return (
             <SectionedScroller selected={section}
-                               style={{backgroundColor: "white"}}>
+                               style={{backgroundColor: color.ourWhite }}>
                 <Section key="home"></Section>
                 <Section key="share"></Section>
                 <Section key="remnants"></Section>
