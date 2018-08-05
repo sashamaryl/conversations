@@ -406,7 +406,7 @@ export class SectionedScroller extends Component {
                             </View>
                        {children}
                         </InsetView> 
-                    )}}
+                    )}
             </ScrollView>
         );
     }
