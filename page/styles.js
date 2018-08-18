@@ -34,8 +34,10 @@ export const homeScreenImage = require('.././assets/BackgroundForAppLanding.png'
 adjustmentFactor = 0.19;
 
 //grid lines 
-const leftSpacer= 40 * pr; 
-const rightSpacer = 40 * pr; 
+const leftSpacer= 20 * pr; 
+const rightSpacer = 20 * pr; 
+const leftGutter = 15 * pr; 
+const rightGutter = 15 * pr; 
 
 
 export const BackgroundImage = ({source}) => (
@@ -73,7 +75,7 @@ export const ScrollHeader = ({children}) => (
 );
 
 export const H1 = ({children, cancelVertMargins}) => {
-    style = cancelVertMargins ? styles.cancelVertMargins : styles.cancelVertMargins;  
+    style = cancelVertMargins ? styles.cancelVertMargins : {} ;  
  return <Text style={[styles.h1, style]}>{children}</Text>
 };
 
@@ -98,7 +100,7 @@ export const P = ({children}) => (
 // H1 centered for centered lists
 export const BullHeaderMain = ({children}) => (
   <Text style={[styles.h1, styles.center]}>
-    {children.map(t => t.toUpperCase())}
+    {children}
   </Text>
 );
 
@@ -156,8 +158,8 @@ const styles = StyleSheet.create({
     horizontalLine: {
         borderBottomColor: color.rules,
         borderBottomWidth: 1,
-        marginTop: 9*pr,
-        marginBottom: 9*pr,
+        marginTop: 6*pr,
+        marginBottom: 3*pr,
     },
 
     bodyText: {
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
       fontWeight: "700",
       lineHeight: 48 * pr * adjustmentFactor * 1.3,
       letterSpacing: 0.5 * pr, 
-      marginTop: 12 * pr,
+      marginTop: 14 * pr,
       marginBottom: 4 * pr,
       textAlign: "justify",
       color: color.darkText,
@@ -198,33 +200,25 @@ const styles = StyleSheet.create({
         color: color.darkText
     },
 
-    insetText:{
+    insetArea:{
       marginLeft: leftSpacer,
       marginRight: rightSpacer,
-      paddingLeft: 15 * pr,
-      paddingRight: 15 * pr,
-      paddingTop: 5 * pr,
+      paddingLeft: leftGutter,
+      paddingRight: rightGutter,
+      backgroundColor: color.insetFrame
     },
 
     insetView: {
       flex: 1,
-      width: width * 0.8, 
-      height: height * 0.95,
-      marginRight: leftSpacer,
-      marginLeft: leftSpacer,
-      marginTop: height*0.05,
-      paddingRight: leftSpacer,
-      paddingLeft: leftSpacer,
-      paddingBottom: width*0.18,
-      backgroundColor: color.insetFrame, 
+      marginTop: 10*pr,
     },
 
     scrollHeader: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingLeft: leftSpacer / 4,
-      paddingRight: leftSpacer / 2,     
+      paddingLeft: leftSpacer / 2,
+      paddingRight: leftSpacer,     
       marginRight: leftSpacer,
       marginLeft: leftSpacer,
       backgroundColor: color.insetFrame, 
@@ -275,6 +269,18 @@ const styles = StyleSheet.create({
         height: 14*pr,
         width: 14*pr,
         margin: 4*pr,
+    },
+
+    // These are the Settings Page Styles . Merge in for the about page from here
+    settingsRadioFormLabel: {
+        lineHeight: 8*pr,
+        width: 150, 
+        color: color.paragraphText,
+        alignSelf: 'flex-end',
+    },
+    settingsRadioButton: {
+        lineHeight: 20*pr,
+        alignSelf: 'center',
     }
 
 

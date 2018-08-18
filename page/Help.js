@@ -12,7 +12,7 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, InsetText, listenButtonImageStyle, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
+import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, listenButtonImageStyle, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -376,7 +376,6 @@ export class SectionedScroller extends Component {
             <View> 
                 <BackgroundImage />
                     <ScrollView ref={scroller => { this._scroller = scroller; }}
-                                style={style}
                                 onLayout={ this.onLayout }
                                 stickyHeaderIndices={children.map((_, i) => i*2)}>
                         {React.Children.map(children, (section) => {
@@ -402,8 +401,8 @@ export class SectionedScroller extends Component {
                                     </ScrollHeader>
                                    ),
                                     (<View ref={section.key}
-                                           style={[styles.insetText, {backgroundColor: color.insetFrame}]}
-                                        key={`${section.key}-body`}>
+                                           style={styles.insetArea}
+                                            key={`${section.key}-body`}>
                                         { sectionBody }
                                     </View>),
                                 ];
