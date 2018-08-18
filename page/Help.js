@@ -12,7 +12,7 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, InsetText, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
+import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, InsetText, listenButtonImageStyle, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -389,20 +389,20 @@ export class SectionedScroller extends Component {
                             
                             return [
                                     (
-                                    <ScrollHeader key={`${section.key}-head`}> 
+                                    <ScrollHeader key={`${section.key}-head`}>
                                         { iconComponent }
                                         <H1>
                                         { sectionTitle }
                                         </H1>
                                         <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
                                                 imageStyle={
-                                                    styles.sectionIcon && active && soundLoading }
+                                                    [styles.listenButtonImageStyle, active && soundLoading && styles.listenButtonImageStyle] }
                                                 onPress={() => this.playSound(section.key)}
                                         />
                                     </ScrollHeader>
                                    ),
                                     (<View ref={section.key}
-                                           style={[styles.sideMargins, {backgroundColor: color.insetFrame}]}
+                                           style={[styles.insetText, {backgroundColor: color.insetFrame}]}
                                         key={`${section.key}-body`}>
                                         { sectionBody }
                                     </View>),

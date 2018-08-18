@@ -1,7 +1,6 @@
 import React from 'react';
 import { Linking, Image, StyleSheet, Text, PixelRatio, View, Dimensions} from 'react-native';
 
-
 //measured from phone
 export const pr = PixelRatio.get();
 export const height = Dimensions.get("window").height;
@@ -12,10 +11,12 @@ const darkestBlue = "rgb(43, 35, 103)"; // backgrounds, buttons, text on white
 const linkBlue = "#4682b4"; // for links only
 const lightBlue = "rgb(43, 35, 103)";
 const ourWhite = "rgb(255, 255, 255)";
+const chillBlue = "rgb(64, 75, 146)";
 
 export const color = {
   background: darkestBlue,
   insetFrame: ourWhite,
+  paragraphText: chillBlue, 
   darkText: darkestBlue,
   rules: darkestBlue,
   buttons: {
@@ -61,27 +62,28 @@ export const InsetView = ({children}) => (
 export const InsetText = ({style, children}) => (
   <Text style={[styles.bodyText, styles.insetText, style]}>
     {children}
-  </Text>
+  </Text>   
 );
 
 export const ScrollHeader = ({children}) => (
-    <View style={styles.scrollHeader}>
+    <View style={styles.scrollHeader}
+          cancelVertMargins={true} >
         {children}
     </View>
-)
-
-export const H1 = ({children}) => (
-  <Text style={styles.h1}>{children}
-  </Text>
 );
 
-export const H2 = ({style, children}) => (
+export const H1 = ({children, cancelVertMargins}) => {
+    style = cancelVertMargins ? styles.cancelVertMargins : styles.cancelVertMargins;  
+ return <Text style={[styles.h1, style]}>{children}</Text>
+};
+
+export const H2 = ({children}) => (
     <Text style={styles.h2}>
         {children}
     </Text>
 );
 
-export const H3 = ({style, children}) => (
+export const H3 = ({children}) => (
     <Text style={styles.h3}>
         {children}
     </Text>
@@ -158,6 +160,15 @@ const styles = StyleSheet.create({
         marginBottom: 9*pr,
     },
 
+    bodyText: {
+        fontSize: 30 * pr * adjustmentFactor,
+        lineHeight: 30 * pr * adjustmentFactor * 1.8,
+        fontWeight: "100", 
+        letterSpacing: 0.05 * pr,
+        marginBottom: 34 * pr * adjustmentFactor,
+        textAlign: "justify",
+        color: color.paragraphText,
+    },
     h1: {
       fontSize: 48 * pr * adjustmentFactor,
       fontWeight: "700",
@@ -188,21 +199,22 @@ const styles = StyleSheet.create({
     },
 
     insetText:{
-      padding: 10*pr,
-      paddingLeft: 10*pr,
-      paddingRight: 18*pr,
-      paddingBottom: 10*pr,
+      marginLeft: leftSpacer,
+      marginRight: rightSpacer,
+      paddingLeft: 15 * pr,
+      paddingRight: 15 * pr,
+      paddingTop: 5 * pr,
     },
 
     insetView: {
       flex: 1,
       width: width * 0.8, 
       height: height * 0.95,
-      marginRight: rightSpacer,
+      marginRight: leftSpacer,
       marginLeft: leftSpacer,
       marginTop: height*0.05,
-      paddingRight: width*0.08,
-      paddingLeft: width*0.08,
+      paddingRight: leftSpacer,
+      paddingLeft: leftSpacer,
       paddingBottom: width*0.18,
       backgroundColor: color.insetFrame, 
     },
@@ -210,33 +222,20 @@ const styles = StyleSheet.create({
     scrollHeader: {
       flexDirection: 'row',
       alignItems: 'center',
-    //   paddingLeft: 16 * pr,
-      paddingRight: 16 * pr,     
       justifyContent: 'space-between',
-      marginRight: rightSpacer,
+      paddingLeft: leftSpacer / 4,
+      paddingRight: leftSpacer / 2,     
+      marginRight: leftSpacer,
       marginLeft: leftSpacer,
       backgroundColor: color.insetFrame, 
-    //   height: 40 * pr, 
+      height: 30 * pr, 
     },
 
-    sideMargins: {
-      paddingLeft: 15 * pr,
-      paddingRight: 15 * pr,
-      paddingTop: 5 * pr,
-      marginLeft: leftSpacer,
-      marginRight: rightSpacer,
+    cancelVertMargins: {
+        marginTop: 0, 
+        marginBottom: 0,
     },
 
-
-      bodyText: {
-        fontSize: 30 * pr * adjustmentFactor,
-        lineHeight: 30 * pr * adjustmentFactor * 1.8,
-        fontWeight: "100", 
-        letterSpacing: 0.05 * pr,
-        marginBottom: 34 * pr * adjustmentFactor,
-        textAlign: "justify",
-        color: color.darkText
-    },
 
     errorText: {
         borderWidth: 1,
@@ -267,16 +266,15 @@ const styles = StyleSheet.create({
     },
 
     sectionIcon: {
-        // flex: 1, 
-        height: 16*pr,
-        width: 16*pr,
+        height: 14*pr,
+        width: 14*pr,
         margin: 4*pr,
     },
 
     listenButtonImageStyle: {
-        // height: 20*pr,
-        // width: 20*pr,
-        // margin: 4*pr,
+        height: 14*pr,
+        width: 14*pr,
+        margin: 4*pr,
     }
 
 
