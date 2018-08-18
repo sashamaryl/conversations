@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, StyleSheet, Text, PixelRatio, View, Dimensions} from 'react-native';
+import { Linking, Image, StyleSheet, Text, PixelRatio, View, Dimensions} from 'react-native';
 
 
 //measured from phone
@@ -32,13 +32,17 @@ export const homeScreenImage = require('.././assets/BackgroundForAppLanding.png'
 //fudge factors
 adjustmentFactor = 0.19;
 
+//grid lines 
+const leftSpacer= 40 * pr; 
+const rightSpacer = 40 * pr; 
 
 
-export const BackgroundImage = ({style, source}) => (
+export const BackgroundImage = ({source}) => (
   <Image
-    source={source}
+    source={source || homeScreenImage}
+    style={{backgroundColor: color.insetFrame}}
     resizeMode='cover'
-    style={[styles.image, style]}
+    style={[styles.image]}
   />
 )
 
@@ -59,6 +63,12 @@ export const InsetText = ({style, children}) => (
     {children}
   </Text>
 );
+
+export const ScrollHeader = ({children}) => (
+    <View style={styles.scrollHeader}>
+        {children}
+    </View>
+)
 
 export const H1 = ({children}) => (
   <Text style={styles.h1}>{children}
@@ -108,6 +118,9 @@ export const HR = () => (
   <View style={styles.horizontalLine}></View>
 );
 
+export const icon = () => {
+
+}
 export const ErrorBox = ({style, children}) => (
     <Text style={[styles.bodyText, styles.errorText, style]}>
         {children}
@@ -183,16 +196,39 @@ const styles = StyleSheet.create({
 
     insetView: {
       flex: 1,
-      backgroundColor: "white",
-      marginRight: width*0.1,
-      marginLeft: width*0.1,
+      width: width * 0.8, 
+      height: height * 0.95,
+      marginRight: rightSpacer,
+      marginLeft: leftSpacer,
       marginTop: height*0.05,
       paddingRight: width*0.08,
       paddingLeft: width*0.08,
       paddingBottom: width*0.18,
+      backgroundColor: color.insetFrame, 
     },
-    
-    bodyText: {
+
+    scrollHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    //   paddingLeft: 16 * pr,
+      paddingRight: 16 * pr,     
+      justifyContent: 'space-between',
+      marginRight: rightSpacer,
+      marginLeft: leftSpacer,
+      backgroundColor: color.insetFrame, 
+    //   height: 40 * pr, 
+    },
+
+    sideMargins: {
+      paddingLeft: 15 * pr,
+      paddingRight: 15 * pr,
+      paddingTop: 5 * pr,
+      marginLeft: leftSpacer,
+      marginRight: rightSpacer,
+    },
+
+
+      bodyText: {
         fontSize: 30 * pr * adjustmentFactor,
         lineHeight: 30 * pr * adjustmentFactor * 1.8,
         fontWeight: "100", 
@@ -224,6 +260,25 @@ const styles = StyleSheet.create({
     center: {
         textAlign: 'center'
     },
+    image: {
+        position: 'absolute', 
+        height: height, 
+        width: width, 
+    },
+
+    sectionIcon: {
+        // flex: 1, 
+        height: 16*pr,
+        width: 16*pr,
+        margin: 4*pr,
+    },
+
+    listenButtonImageStyle: {
+        // height: 20*pr,
+        // width: 20*pr,
+        // margin: 4*pr,
+    }
+
 
 });
 

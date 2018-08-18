@@ -4,7 +4,7 @@ import ReactNative, {
     ScrollView,
     StyleSheet,
     Text,
-    View
+    View, 
 } from 'react-native';
 import Sound from "react-native-sound";
 
@@ -12,7 +12,7 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import pageStyles, { A, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, InsetText } from "./styles.js";
+import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, InsetText, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -288,7 +288,7 @@ export class SectionedScroller extends Component {
         if (child != null) {
             let nodeHandle = ReactNative.findNodeHandle(this._scroller);
             child.measureLayout(nodeHandle, (_x, y) => {
-                this._scroller.scrollTo({x: 0, y: y-30, animated: animated});
+                this._scroller.scrollTo({x: 0, y: y, animated: animated});
             }, (error) => {
                 console.log(error);
             })
@@ -373,48 +373,51 @@ export class SectionedScroller extends Component {
             localizedText = translations[selectedLang]
 
         return (
-            <ScrollView ref={scroller => { this._scroller = scroller; }}
-                        style={style}
-                        onLayout={ this.onLayout }
-                        stickyHeaderIndices={children.map((_, i) => i*2)}>
-                {React.Children.map(children, (section) => {
-                     let {title} = section.props,
-                         icon = HelpIcons[section.key],
-                         iconComponent = icon && (<Image source={icon} style={styles.sectionIcon}/>),
-                         active = soundKey === section.key,
-                         sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
-                         sectionTitle = localizedText[section.key].title;
-
-                    return (
-                         <InsetView> 
-                             <View key={`${section.key}-head`}>
-                             {iconComponent}
-                             <H3>
-                                 { sectionTitle }
-                             </H3>
-                             <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
-                                     style={styles.listenButton}
-                                     imageStyle={[styles.listenButtonImageStyle,
-                                                  active && soundLoading && styles.listenButtonImageLoadingStyle]}
-                                     onPress={() => this.playSound(section.key)}
-                             />
-                             </View>
-                            <View ref={section.key}
-                                // style={[styles.section, {minHeight: 0.5 * pageHeight}]}
-                                key={`${section.key}-body`}>
-                                { sectionBody }
-                            </View>
-                       {children}
-                        </InsetView> 
-                    )}
-            </ScrollView>
-        );
+            <View> 
+                <BackgroundImage />
+                    <ScrollView ref={scroller => { this._scroller = scroller; }}
+                                style={style}
+                                onLayout={ this.onLayout }
+                                stickyHeaderIndices={children.map((_, i) => i*2)}>
+                        {React.Children.map(children, (section) => {
+                            let {title} = section.props,
+                            icon = HelpIcons[section.key],
+                            iconComponent = icon && (<Image source={icon} style={styles.sectionIcon}/>) || (<View style={styles.sectionIcon}></View>),
+                            active = soundKey === section.key,
+                            sectionBody = localizedText[section.key].text() || (<Text>(Not found)</Text>)
+                            sectionTitle = localizedText[section.key].title;
+                            
+                            return [
+                                    (
+                                    <ScrollHeader key={`${section.key}-head`}> 
+                                        { iconComponent }
+                                        <H1>
+                                        { sectionTitle }
+                                        </H1>
+                                        <Button image={active && soundPlaying ? PlayingIcon : ListenIcon}
+                                                imageStyle={
+                                                    styles.sectionIcon && active && soundLoading }
+                                                onPress={() => this.playSound(section.key)}
+                                        />
+                                    </ScrollHeader>
+                                   ),
+                                    (<View ref={section.key}
+                                           style={[styles.sideMargins, {backgroundColor: color.insetFrame}]}
+                                        key={`${section.key}-body`}>
+                                        { sectionBody }
+                                    </View>),
+                                ];
+                        })}
+                        {children}
+                    </ScrollView>
+            </View>
+           );
     }
 }
 
 
 // Placeholder
-const Section = (props) => (<Text/>);
+const Section = (props) => (<Text />);
 
 const sectionLookup = {
     Chooser: 'home',
@@ -449,8 +452,7 @@ export default class HelpPage extends Component {
         
 
         return (
-            <SectionedScroller selected={section}
-                               style={{backgroundColor: color.ourWhite }}>
+            <SectionedScroller selected={section} >
                 <Section key="home"></Section>
                 <Section key="share"></Section>
                 <Section key="remnants"></Section>
@@ -464,57 +466,12 @@ export default class HelpPage extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-
-    section: {
-        paddingLeft: 40
-    },
-
-    sectionHead: {
-        backgroundColor: "white",
-        borderTopColor: "#aaa",
-        borderTopWidth: 1,
-        flex: 1,
-        flexDirection: "row",
-    },
-
-    sectionIcon: {
-        height: 40,
-        width: 40,
-        position: "absolute",
-        left: 0,
-        top: 10
-    },
-
-    sectionTitle: {
-        fontWeight: "bold",
-        paddingLeft: 50
-    },
-
-    listenButton: {
-        position: "absolute",
-        right: 10,
-        top: 10
-    },
-
-    listenButtonImageStyle: {
-        height: 50,
-        width: 50
-    },
-
-    listenButtonImageLoadingStyle: {
-        opacity: 0.5
-    }
-})
 
 HelpPage.navConfig = {
     screen: HelpPage,
 
     navigationOptions: ({navigation}) => ({
-        headerStyle: pageStyles.header,
+        headerStyle: styles.header,
         headerTitle: "How to Use",
         initialRouteParams: { section: "home" }
     })
