@@ -16,7 +16,7 @@ const chillBlue = "rgb(64, 75, 146)";
 export const color = {
   background: darkestBlue,
   insetFrame: ourWhite,
-  paragraphText: chillBlue, 
+  paragraphText: chillBlue,
   darkText: darkestBlue,
   rules: darkestBlue,
   buttons: {
@@ -33,11 +33,11 @@ export const homeScreenImage = require('.././assets/BackgroundForAppLanding.png'
 //fudge factors
 adjustmentFactor = 0.19;
 
-//grid lines 
-const leftSpacer= 20 * pr; 
-const rightSpacer = 20 * pr; 
-const leftGutter = 15 * pr; 
-const rightGutter = 15 * pr; 
+//grid lines
+const leftSpacer= 20 * pr;
+const rightSpacer = 20 * pr;
+const leftGutter = 15 * pr;
+const rightGutter = 15 * pr;
 
 
 export const BackgroundImage = ({source}) => (
@@ -64,19 +64,18 @@ export const InsetView = ({children}) => (
 export const InsetText = ({style, children}) => (
   <Text style={[styles.bodyText, styles.insetText, style]}>
     {children}
-  </Text>   
+  </Text>
 );
 
 export const ScrollHeader = ({children}) => (
     <View style={styles.scrollHeader}
-          cancelVertMargins={true} >
+          cancelVertMargins={styles.cancelVertMargins} >
         {children}
     </View>
 );
 
 export const H1 = ({children, cancelVertMargins}) => {
-    style = cancelVertMargins ? styles.cancelVertMargins : {} ;  
- return <Text style={[styles.h1, style]}>{children}</Text>
+     return <Text style={[{cancelVertMargins}, styles.h1]}>{children}</Text>
 };
 
 export const H2 = ({children}) => (
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
     bodyText: {
         fontSize: 30 * pr * adjustmentFactor,
         lineHeight: 30 * pr * adjustmentFactor * 1.8,
-        fontWeight: "100", 
+        fontWeight: "100",
         letterSpacing: 0.05 * pr,
         marginBottom: 34 * pr * adjustmentFactor,
         textAlign: "justify",
@@ -175,7 +174,7 @@ const styles = StyleSheet.create({
       fontSize: 48 * pr * adjustmentFactor,
       fontWeight: "700",
       lineHeight: 48 * pr * adjustmentFactor * 1.3,
-      letterSpacing: 0.5 * pr, 
+      letterSpacing: 0.5 * pr,
       marginTop: 14 * pr,
       marginBottom: 4 * pr,
       textAlign: "justify",
@@ -218,15 +217,15 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingLeft: leftSpacer / 2,
-      paddingRight: leftSpacer,     
+      paddingRight: leftSpacer,
       marginRight: leftSpacer,
       marginLeft: leftSpacer,
-      backgroundColor: color.insetFrame, 
-      height: 30 * pr, 
+      backgroundColor: color.insetFrame,
+      height: 30 * pr,
     },
 
     cancelVertMargins: {
-        marginTop: 0, 
+        marginTop: 0,
         marginBottom: 0,
     },
 
@@ -254,9 +253,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     image: {
-        position: 'absolute', 
-        height: height, 
-        width: width, 
+        position: 'absolute',
+        height: height,
+        width: width,
     },
 
     sectionIcon: {
@@ -274,7 +273,7 @@ const styles = StyleSheet.create({
     // These are the Settings Page Styles . Merge in for the about page from here
     settingsRadioFormLabel: {
         lineHeight: 8*pr,
-        width: 150, 
+        width: 150,
         color: color.paragraphText,
         alignSelf: 'flex-end',
     },
