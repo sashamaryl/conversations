@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactNative, { Text, View , StyleSheet, Dimensions, PixelRatio, ImageBackground, ScrollView} from 'react-native';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import styles , {InsetView, InsetText, P,H1,H2,H3,HR, height, width, homeScreenImage} from "././styles.js";
+import styles , {InsetView, InsetText, P,H1,H2,H3,HR, BullHeaderMain, height, width, homeScreenImage, color, BullHeader} from "././styles.js";
 import {getLocalizedString} from ".././Languages/LanguageChooser";
 import {ProjectDescription, ProjectCredits} from "./AboutDescriptions";
 import {saveSetting, getSetting} from ".././StorageUtils";
@@ -69,17 +69,18 @@ export default class SettingsPage extends Component {
           imageStyle={{resizeMode: 'cover'}}
           style={{width: width, height: height}}
       >
+      
         <ScrollView>
-            <InsetView>
+          <View style={[styles.insetView, styles.insetArea]}>
                  <H1>{localizedStrMap["settingsTitle"]}</H1>
                  <H2>{localizedStrMap["chooseLanguageOption"]}</H2>
                  <RadioForm
                     radio_props={radio_props}
-                    buttonColor={'rgb(43,35,103)'}
-                    selectedButtonColor={'rgb(43,35,103)'}
+                    buttonColor={color.buttons.background}
+                    selectedButtonColor={color.buttons.selected}
                     initial={languageToRadioMap[global.LANG]}
                     buttonStyle={styles.settingsRadioButton}
-                    labelStyle={[styles.settingsRadioFormLabel, styles.fontSize10]}
+                    labelStyle={[styles.settingsRadioFormLabel]}
                     onPress={(value) => {this.handleSettingsChanged(value)}}
                 />
                 <HR />
@@ -89,11 +90,10 @@ export default class SettingsPage extends Component {
 
                 <HR />
 
-                  <H1>{localizedStrMap["acknowledgementsTitle"]}</H1>
+                  <BullHeaderMain>{localizedStrMap["acknowledgementsTitle"]}</BullHeaderMain>
                   <ProjectCredits>{localizedStrMap}</ProjectCredits>
 
-
-            </InsetView>
+            </View>         
         </ScrollView>
       </ImageBackground>
     );

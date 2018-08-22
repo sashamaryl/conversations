@@ -1,6 +1,5 @@
 import React from 'react';
-import { Linking, StyleSheet, Text, PixelRatio, View, Dimensions} from 'react-native';
-
+import { Linking, Image, StyleSheet, Text, PixelRatio, View, Dimensions} from 'react-native';
 
 //measured from phone
 export const pr = PixelRatio.get();
@@ -12,10 +11,12 @@ const darkestBlue = "rgb(43, 35, 103)"; // backgrounds, buttons, text on white
 const linkBlue = "#4682b4"; // for links only
 const lightBlue = "rgb(43, 35, 103)";
 const ourWhite = "rgb(255, 255, 255)";
+const chillBlue = "rgb(64, 75, 146)";
 
 export const color = {
   background: darkestBlue,
   insetFrame: ourWhite,
+  paragraphText: chillBlue,
   darkText: darkestBlue,
   rules: darkestBlue,
   buttons: {
@@ -32,13 +33,19 @@ export const homeScreenImage = require('.././assets/BackgroundForAppLanding.png'
 //fudge factors
 adjustmentFactor = 0.19;
 
+//grid lines
+const leftSpacer= 20 * pr;
+const rightSpacer = 20 * pr;
+const leftGutter = 15 * pr;
+const rightGutter = 15 * pr;
 
 
-export const BackgroundImage = ({style, source}) => (
+export const BackgroundImage = ({source}) => (
   <Image
-    source={source}
+    source={source || homeScreenImage}
+    style={{backgroundColor: color.insetFrame}}
     resizeMode='cover'
-    style={[styles.image, style]}
+    style={[styles.image]}
   />
 )
 
@@ -60,18 +67,25 @@ export const InsetText = ({style, children}) => (
   </Text>
 );
 
-export const H1 = ({children}) => (
-  <Text style={styles.h1}>{children}
-  </Text>
+export const ScrollHeader = ({children}) => (
+    <View style={styles.scrollHeader}
+          cancelVertMargins={true} >
+        {children}
+    </View>
 );
 
-export const H2 = ({style, children}) => (
+export const H1 = ({children, cancelVertMargins}) => {
+      style = cancelVertMargins ? styles.cancelVertMargins : {} ;
+ return <Text style={[styles.h1, style]}>{children}</Text>
+};
+
+export const H2 = ({children}) => (
     <Text style={styles.h2}>
         {children}
     </Text>
 );
 
-export const H3 = ({style, children}) => (
+export const H3 = ({children}) => (
     <Text style={styles.h3}>
         {children}
     </Text>
@@ -86,7 +100,7 @@ export const P = ({children}) => (
 // H1 centered for centered lists
 export const BullHeaderMain = ({children}) => (
   <Text style={[styles.h1, styles.center]}>
-    {children.map(t => t.toUpperCase())}
+     {children}
   </Text>
 );
 
@@ -158,8 +172,8 @@ const styles = StyleSheet.create({
     horizontalLine: {
         borderBottomColor: color.rules,
         borderBottomWidth: 1,
-        marginTop: 9*pr,
-        marginBottom: 9*pr,
+        marginTop: 6*pr,
+        marginBottom: 3*pr,
     },
 
     h1: {
@@ -191,22 +205,35 @@ const styles = StyleSheet.create({
         color: color.darkText
     },
 
-    insetText:{
+    insetText: {
       padding: 10*pr,
       paddingLeft: 10*pr,
       paddingRight: 18*pr,
       paddingBottom: 10*pr,
+      paddingLeft: leftGutter,
+      paddingRight: rightGutter,
+      backgroundColor: color.insetFrame,
+    },
+
+    insetArea: {
+      marginLeft: leftSpacer,
+      marginRight: rightSpacer,
+      paddingLeft: leftGutter,
+      paddingRight: rightGutter,
+      backgroundColor: color.insetFrame
     },
 
     insetView: {
       flex: 1,
-      backgroundColor: "white",
-      marginRight: width*0.1,
-      marginLeft: width*0.1,
+      width: width * 0.8,
+      height: height * 0.95,
+      marginRight: leftSpacer,
+      marginLeft: leftSpacer,
       marginTop: height*0.05,
-      paddingRight: width*0.08,
-      paddingLeft: width*0.08,
+      paddingRight: leftSpacer,
+      paddingLeft: leftSpacer,
       paddingBottom: width*0.18,
+      backgroundColor: color.insetFrame,
     },
 
     bodyText: {
@@ -218,6 +245,24 @@ const styles = StyleSheet.create({
         textAlign: "justify",
         color: color.darkText
     },
+
+    scrollHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingLeft: leftSpacer / 2,
+      paddingRight: leftSpacer,
+      marginRight: leftSpacer,
+      marginLeft: leftSpacer,
+      backgroundColor: color.insetFrame,
+      height: 30 * pr,
+    },
+
+    cancelVertMargins: {
+        marginTop: 0,
+        marginBottom: 0,
+    },
+
 
     errorText: {
         borderWidth: 1,
@@ -241,6 +286,25 @@ const styles = StyleSheet.create({
     center: {
         textAlign: 'center'
     },
+
+    image: {
+        position: 'absolute',
+        height: height,
+        width: width,
+    },
+
+    sectionIcon: {
+        height: 14*pr,
+        width: 14*pr,
+        margin: 4*pr,
+    },
+
+    listenButtonImageStyle: {
+        height: 14*pr,
+        width: 14*pr,
+        margin: 4*pr,
+    }
+
 
 });
 
