@@ -307,10 +307,8 @@ const styles = StyleSheet.create({
 
     screenshot: {
         resizeMode: 'contain',
-        width: 256 * pr,
-        height: 35 * pr
+        width: '100%',
     }
-
 
 
 });
