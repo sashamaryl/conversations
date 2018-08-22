@@ -48,7 +48,7 @@ const translations = {
             title: 'Objects',
             audio: require("../assets/audio/English_audio/help_home.wav"),
             text: () => (
-                <Text>
+                <View>
                     <P>Explore stories of the invisible women of Delhi as told by them.</P>
                     <Image
                         source={ require("../assets/help/objects-example.png") }
@@ -63,7 +63,7 @@ const translations = {
                         <Strong>More Objects:</Strong> You can see more stories
                         by tapping the arrows ({'< >'}) or swiping to the left or right.
                     </P>
-                </Text>
+                </View>
             )
         },
         share: {
@@ -80,7 +80,7 @@ const translations = {
             title: 'Remnants',
             audio: require("../assets/audio/English_audio/help_remnants_full_section.mp3"),
             text: () => (
-                <Text>
+                <View>
                     <P>
                         After viewing 2 videos a new choice (Fork & Knife icon) becomes available
                         in the navigation bar at the bottom of the screen. Tapping the icon brings
@@ -96,7 +96,7 @@ const translations = {
                         the Remnants page you will start to see something revealed behind the tiles.
                         Listen to all the remnants to reveal the entire hidden image.
                     </P>
-                </Text>
+                </View>
             )
         },
         settings: {
@@ -114,7 +114,7 @@ const translations = {
             title: 'Resources',
             audio: require("../assets/audio/English_audio/help_resources.mp3"),
             text: () => (
-                <Text>
+                <View>
                     <P><Em>I’m interested in knowing more</Em></P>
                     <P>
                         Visit <A href="http://www.aashiyaan.org">www.aashiyaan.org</A> to learn more
@@ -141,7 +141,7 @@ const translations = {
                     <Bull><A href='https://www.slaponline.org/'>Self defense</A></Bull>
                     <Bull><A href='https://krititeam.blogspot.com/'>Film for Change</A></Bull>
                     <Bull>Visit <A href='http://www.aashiyaan.org'>www.aashiyan.org</A> for more...</Bull>
-                </Text>
+                </View>
             )
         },
         about: {
@@ -175,7 +175,7 @@ const translations = {
             title: 'होम',
             audio: require("../assets/audio/Hindi_audio/home_hindi.mp3"),
             text: () => (
-                <Text>
+                <View>
                     <P>दिल्ली में रहने वाली महिलाओं की अदृश्य जीवनियों को देखें।</P>
                     <Image
                         source={ require("../assets/help/objects-example.png") }
@@ -192,7 +192,7 @@ const translations = {
                     </P>
                     <P><Em>*टैप: उंगली से एक बार दबाकर उठाना।</Em></P>
                     <P><Em>**स्वाइप: उंगली से दबाकर किसी दिशा में खींचना।</Em></P>
-                </Text>
+                </View>
             ),
         },
         share: {
@@ -209,7 +209,7 @@ const translations = {
             title: 'निशान',
             audio: require("../assets/audio/Hindi_audio/remnants_hindi.mp3"),
             text: () => (
-                <Text>
+                <View>
                     <P>
                         किन्हीं २ वीडियो को देखने के बाद स्क्रीन के निचले भाग में नेविगेशन बार में एक नया विकल्प
                         (कांटे और छूरी का चिन्ह) उपलब्ध होता है | चिन्ह पर टैप करने से आपको "निशान" अध्याय
@@ -224,7 +224,7 @@ const translations = {
                         उस टाइल के पीछे कुछ प्रकट होता पाएंगे। इस छिपी हुई छवि को प्रकट करने के लिए सभी
                         निशानों की कहानी को सुनना होगा।
                     </P>
-                </Text>
+                </View>
             )
         },
         settings: {

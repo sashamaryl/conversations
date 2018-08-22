@@ -307,7 +307,13 @@ const styles = StyleSheet.create({
 
     screenshot: {
         resizeMode: 'contain',
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        height: 30 * pr,
         width: '100%',
+        marginBottom: 34 * pr * adjustmentFactor,
+
     }
 
 
