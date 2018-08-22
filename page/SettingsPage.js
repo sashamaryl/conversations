@@ -69,7 +69,7 @@ export default class SettingsPage extends Component {
           imageStyle={{resizeMode: 'cover'}}
           style={{width: width, height: height}}
       >
-      
+
         <ScrollView>
           <View style={[styles.insetView, styles.insetArea]}>
                  <H1>{localizedStrMap["settingsTitle"]}</H1>
@@ -93,7 +93,7 @@ export default class SettingsPage extends Component {
                   <BullHeaderMain>{localizedStrMap["acknowledgementsTitle"]}</BullHeaderMain>
                   <ProjectCredits>{localizedStrMap}</ProjectCredits>
 
-            </View>         
+            </View>
         </ScrollView>
       </ImageBackground>
     );

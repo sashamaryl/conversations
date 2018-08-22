@@ -303,7 +303,14 @@ const styles = StyleSheet.create({
         height: 14*pr,
         width: 14*pr,
         margin: 4*pr,
+    },
+
+    screenshot: {
+        resizeMode: 'contain',
+        width: 256 * pr,
+        height: 35 * pr
     }
+
 
 
 });

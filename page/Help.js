@@ -13,7 +13,7 @@ import { ENGLISH, HINDI } from '../config';
 
 import {IndicatorViewPager, PagerDotIndicator} from 'rn-viewpager';
 
-import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, listenButtonImageStyle, BackgroundImage, ScrollHeader, HR, pr, width, height } from "./styles.js";
+import styles, { A, H1, H3, Em, Bull, P, Strong, BullHeader, BullHeaderMain, InsetView, color, listenButtonImageStyle, BackgroundImage, ScrollHeader, HR, pr, width, height, Mail } from "./styles.js";
 import { Button } from "../component/Button.js";
 
 
@@ -52,7 +52,7 @@ const translations = {
                     <P>Explore stories of the invisible women of Delhi as told by them.</P>
                     <Image
                         source={ require("../assets/help/objects-example.png") }
-                        style={ pageStyles.screenshot }
+                        style={ styles.screenshot }
                     />
                     <P>
                         <Strong>Objects:</Strong> To play a video clip, select one of the
@@ -179,7 +179,7 @@ const translations = {
                     <P>दिल्ली में रहने वाली महिलाओं की अदृश्य जीवनियों को देखें।</P>
                     <Image
                         source={ require("../assets/help/objects-example.png") }
-                        style={ pageStyles.screenshot }
+                        style={ styles.screenshot }
                     />
                     <P>
                         <Strong>वस्तु:</Strong> वीडियो क्लिप चलाने के लिए, स्क्रीन के ऊपरी
